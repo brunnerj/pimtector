@@ -1,7 +1,7 @@
 {
-  "name": "gatsby-starter-hello-world",
-  "private": true,
-  "description": "A simplified bare-bones starter for Gatsby",
+  "name": "pimtector",
+  "private": false,
+  "description": "PIMtector web site for hunting down PIM",
   "version": "0.1.0",
   "license": "MIT",
   "scripts": {
@@ -9,11 +9,14 @@
     "develop": "gatsby develop",
     "format": "prettier --write src/**/*.{js,jsx}",
     "start": "npm run develop",
-    "serve": "gatsby serve",
-    "test": "echo \"Write tests! -> https://gatsby.dev/unit-testing\""
+    "deploy": "gatsby-plugin-s3 deploy --yes && aws cloudfront create-invalidation --distribution-id $CLOUDFRONT_DISTRIBUTION --paths \"/*\"",
+    "serve": "sudo gatsby serve --host pimtector.local --port 80",
+    "test": "echo \"Write tests!\""
   },
   "dependencies": {
     "gatsby": "^2.8.4",
+    "gatsby-plugin-canonical-urls": "^2.0.13",
+    "gatsby-plugin-s3": "^0.2.5",
     "react": "^16.8.6",
     "react-dom": "^16.8.6"
   },
@@ -22,9 +25,9 @@
   },
   "repository": {
     "type": "git",
-    "url": "https://github.com/gatsbyjs/gatsby-starter-hello-world"
+    "url": "https://github.com/brunnerj/pimtector.git"
   },
   "bugs": {
-    "url": "https://github.com/gatsbyjs/gatsby/issues"
+    "url": "https://github.com/brunnerj/pimtector/issues"
   }
 }
