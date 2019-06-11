@@ -92,7 +92,7 @@ const fakeReceiver = (function() {
 		pause: _pause
 	}
 }());
-window.fakeReceiver = fakeReceiver;
+// window.fakeReceiver = fakeReceiver; // for console debugging
 
 const initialState = {
 	isConnected: false,
