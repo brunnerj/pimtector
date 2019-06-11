@@ -1,0 +1,68 @@
+/* ToggleSwitch */
+
+	$aspect-ratio: 1.625;
+	$thumb-spacing: 0.125rem;
+	$thumb-size: 2.5rem; // 2.75rem - 2 * 0.125rem = 2.5rem
+	$thumb-slide-size: 1.84375rem; // 2.75rem * (1.625 - 1) + 0.125rem 
+
+	.toggle-switch {
+		display: inline-block;
+		height: _size(element-height);
+		width: calc(#{_size(element-height)} * #{$aspect-ratio});
+
+		cursor: pointer !important;
+		user-select: none !important;
+		position: relative !important;
+
+		&.on,
+		&.off {
+
+			&::before,
+			&::after {
+				content: '';
+				left: 0;
+				position: absolute !important;
+			}
+
+			&::before {
+				height: inherit;
+				width: inherit;
+				border-radius: calc(#{_size(element-height)} / 2);
+				will-change: background;
+				@include vendor('transition', (
+					'background #{_duration(transition)} ease-out'
+				));
+			}
+
+			&::after {
+				top: $thumb-spacing;
+				height: $thumb-size;
+				width: $thumb-size;
+				border-radius: $thumb-size / 2;
+				background: #fff;
+				will-change: transform;
+				@include vendor('transition', (
+					'transform #{_duration(transition)} ease-out'
+				));
+			}
+		}
+
+		&.on {
+			&::before {
+				background: _palette(bg-header) !important;
+			}
+			&::after {
+				@include vendor('transform', 'translateX(#{$thumb-slide-size})');
+			}
+		}
+
+		&.off {
+			&::before {
+				background:#aaa !important;
+			}
+			&::after {
+				@include vendor('transform', 'translateX(#{$thumb-spacing})');
+			}
+		}
+
+	}

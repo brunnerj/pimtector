@@ -7,7 +7,29 @@
 const targetAddress = new URL(process.env.TARGET_ADDRESS || `http://pimtector.local`);
 
 module.exports = {
+	siteMetadata: {
+		title: 'PIMtector',
+		author: 'James Brunner',
+		description: 'PIMtector to hunt down PIM',
+		keywords: 'PIM, passive IM, PIM testing, intermodulation, PIM hunting, interference hunting',
+		owner: 'Brunner Technical Services LLC',
+		ownerLink: 'https://brunnertechnicalservices.com'
+	},
 	plugins: [
+		{
+			resolve: 'gatsby-plugin-manifest',
+			options: {
+				name: 'PIMtector',
+				short_name: 'PIMtector',
+				start_url: '/',
+				background_color: '#663399',
+				theme_color: '#28ac70',
+				display: 'standalone',
+				icon: 'src/images/icon.png', // This path is relative to the root of the site.
+			},
+		},
+		'gatsby-plugin-sass',
+		'gatsby-plugin-react-helmet',
 		{
 			resolve: 'gatsby-plugin-s3',
 			options: {
