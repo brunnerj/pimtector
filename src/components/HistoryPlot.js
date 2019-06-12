@@ -34,48 +34,48 @@ const HistoryPlot = ({ data, config }) => {
 	const rx_below = { name: 'rx_below', color: '#28ac70', points: false, data: rx_below_data, dataset: { borderColor: 'rgba(0,0,0,0)', fill: 'bottom', lineTension: 0 } };
 
 	return (			
-			<AreaChart 
-				id='history-1'
-				height='25%'
-				messages={{empty: 'No data'}} 
-				data={[ threshold, rx_above, rx_below ]}
-				library={{ 
-					maintainAspectRatio: false,
-					legend: false, 
-					scales: {
-						xAxes: [{
-							type: 'time',
-							position: 'bottom',
-							time: {
-								min: tmin,
-								max: tmax,
-								tooltipFormat: 'h:mm:ss a'
-							},
-							ticks: {
-								display: false,
-							},
-							gridLines: {
-								display: false,
-								drawTicks: false,
-								drawBorder: false
+		<AreaChart 
+			id='history-1'
+			height='25%'
+			messages={{empty: 'No data'}} 
+			data={[ threshold, rx_above, rx_below ]}
+			library={{ 
+				maintainAspectRatio: false,
+				legend: false, 
+				scales: {
+					xAxes: [{
+						type: 'time',
+						position: 'bottom',
+						time: {
+							min: tmin,
+							max: tmax,
+							tooltipFormat: 'h:mm:ss a'
+						},
+						ticks: {
+							display: false,
+						},
+						gridLines: {
+							display: false,
+							drawTicks: false,
+							drawBorder: false
 
-							}
-						}],
-						yAxes: [{
-							type: 'linear',
-							position: 'right',
-							gridLines: {
-								display: false
-							},
-							ticks: {
-								min: -130,
-								max: -80,
-								maxTicksLimit: 2
-							}
-						}]
-					}
-				}}
-			/>
+						}
+					}],
+					yAxes: [{
+						type: 'linear',
+						position: 'right',
+						gridLines: {
+							display: false
+						},
+						ticks: {
+							min: -130,
+							max: -80,
+							maxTicksLimit: 2
+						}
+					}]
+				}
+			}}
+		/>
 	);
 };
 
