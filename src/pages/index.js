@@ -105,7 +105,9 @@ const initialState = {
 
 	config: {
 		sound: true,
-		threshold_dBm: -110
+		threshold_dBm: -110,
+		min_power_dBm: -130,
+		max_power_dBm: -80
 	}
 };
 
@@ -252,7 +254,7 @@ const IndexPage = () => {
 					onPlay={() => dispatch({ type: 'play' })}
 					onPause={() => dispatch({ type: 'pause' })}
 					onClear={() => dispatch({ type: 'clear' })}
-					onConfigure={() => dispatch({ type: 'panel', data: 'configure' })} />
+					onConfigure={() => dispatch({ type: 'panel', data: 'settings' })} />
 
 				<Main
 					panel={state.panel}
@@ -266,6 +268,7 @@ const IndexPage = () => {
 					error={state.error}
 					config={state.config}
 					setConfig={(config) => dispatch({ type: 'config', data: config })}
+					onDisconnect={() => dispatch({ type: 'disconnect' })}
 					onCloseConfigure={() => dispatch({ type: 'panel', data: state.isConnected ? 'gauges' : 'connection' })} />
 
 				<Footer />

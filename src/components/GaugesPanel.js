@@ -6,9 +6,25 @@ import Gauge from './Gauge';
 import HistoryPlot from './HistoryPlot';
 import ToneGenerator from './ToneGenerator';
 
-const GaugesPanel = ({ panel, panelTimeout, isPlaying, data, config }) => {
+import Slider from 'react-rangeslider';
+import 'react-rangeslider/lib/index.css';
 
-	const value = (data && data.length && data.slice(-1)[0][1].toFixed(1)) || null;
+const ThresholdSlider = ({ value, unit, setValue, min, max }) => {
+
+	return (
+		<div id='slider-1' className='slider'>
+			<div className='value'>
+				Threshold: <span className='v'>{value}</span>{' '}<span className='unit'>{unit}</span>
+			</div>
+			<Slider min={min} max={max} value={value} onChange={(v) => { setValue(v); }}
+				tooltip={false} />
+		</div>
+	);
+}
+
+const GaugesPanel = ({ panel, panelTimeout, isPlaying, data, config, setConfig }) => {
+
+	const value = (data && data.length && data.slice(-1)[0][1]) || null;
 	
 	// choose frequency on a line between the hi and low
 	// points according to a linear fit: freqHi_Hz - freqLo_Hz = m * (-80 - (-110))
@@ -25,14 +41,22 @@ const GaugesPanel = ({ panel, panelTimeout, isPlaying, data, config }) => {
 		beep = isPlaying && value >= config.threshold_dBm && config.sound;
 	}
 
+	const handleChangeThreshold = (th) => { setConfig({ ...config, threshold_dBm: th })}
+
 	return (
 		<Panel id='gauges' hideTitle={true} panel={panel} panelTimeout={panelTimeout}>
 
 			<ToneGenerator play={beep} frequency={freq_Hz} />
 			
-			<Gauge data={data} />
+			<Gauge value={value} unit={'dBm'} 
+				min={config.min_power_dBm} max={config.max_power_dBm} 
+				threshold={config.threshold_dBm} />
 
-			<HistoryPlot data={data} config={config} />
+			<ThresholdSlider
+				value={config.threshold_dBm} unit={'dBm'} setValue={handleChangeThreshold}
+				min={config.min_power_dBm} max={config.max_power_dBm} />
+
+			<HistoryPlot data={data} threshold={config.threshold_dBm} />
 
 		</Panel>
 	);
@@ -45,5 +69,6 @@ GaugesPanel.propTypes = {
 	panelTimeout: PropTypes.bool.isRequired,
 	isPlaying: PropTypes.bool,
 	data: PropTypes.array,
-	threshold_dBm: PropTypes.number
+	config: PropTypes.object,
+	setConfig: PropTypes.func
 }

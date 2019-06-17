@@ -4,18 +4,23 @@ import PropTypes from 'prop-types';
 import Panel from './Panel';
 import ToggleSwitch from './ToggleSwitch';
 
-const ConfigPanel = ({ panel, panelTimeout, config, setConfig, onCloseConfigure }) => {
+const ConfigPanel = ({ panel, panelTimeout, config, setConfig, onCloseConfigure, onDisconnect }) => {
 
 	return (
-		<Panel id='configure' panel={panel} panelTimeout={panelTimeout}>
+		<Panel id='settings' panel={panel} panelTimeout={panelTimeout}>
 
-			<div className='config-item'>
+			<div className='item'>
 				<ToggleSwitch enabled={config.sound} onChange={(e) => setConfig({ ...config, sound: e.target.isOn })} />
 				<label>Sound</label>
 			</div>
+
+			<div className='item'>
+				<button className='icon fa-link' onClick={onDisconnect} title='Connect'>Disconnect
+			</button>
+
+			</div>
 		
-			<div className='close' onClick={onCloseConfigure}
-		/>
+			<div className='close' onClick={onCloseConfigure}></div>
 		</Panel>
 	);
 };

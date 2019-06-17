@@ -85,32 +85,104 @@
 				@include vendor('align-items', 'center');
 	
 				.gauge {
-					border: 1px dotted blue;
 					position: relative;
-					padding: 3rem;
+					margin-top: 1rem;
 					width: 100%;
-					max-width: 500px;
+					max-width: 400px;
 					text-align: center;
+
+					&:after {
+						content: '';
+						display: block;
+						padding-bottom: 100%;
+					}
 
 					.readout {
 						position: absolute;
 						display: flex;
 						flex-direction: column;
 						justify-content: center;
-						top: 50%;
-						left: 50%;
-						width: 120px;
-						height: 120px;
-						margin-left: -60px;
-						margin-top: -60px;
-						padding-top: 20px;
-						background-color: #28ac70;
-						border-radius: 100%;
-						color: _palette(fg);
+						left: 0;
+						right: 0;
+						top: 0;
+						bottom: 0;
+						
+						.needle {
+							position: absolute;
+							background-color: #28ac70;
+							border-radius: 100%;
+							width: 30%;
+							height: 30%;
+							left: 35%;
+							z-index: 1;
+							transform: rotate(45deg);
+
+							@include vendor('transition', (
+								'transform #{_duration(transition)} ease-in-out'
+							));
+
+							&:after {
+								content: '';
+								position: absolute;
+								bottom: 0;
+								left: 50%;
+								width: 0;
+								height: 0;
+								border: 1em solid transparent;
+								border-top-color: #28ac70;
+								border-bottom: 0;
+								margin-left: -1em;
+								margin-bottom: -0.8em;
+							}	
+						}
+
+						.value, .unit {
+							color: _palette(fg);
+							z-index: 2;
+						}
 
 						.value {
 							font-size: 2.6rem;
-							//line-height: 3.2rem;
+							line-height: 2.6rem;
+							padding-top: 1.2rem;
+						}
+					}
+				}
+
+				#gauge-1 {
+					position: absolute;
+					max-height: 500px;
+					height: 100% !important;
+					line-height: 100% !important;
+				}
+
+				#slider-1 {
+					width: 40%;
+					max-width: 350px;
+					min-width: 250px;
+					margin-top: -4rem;
+					.rangeslider {
+						background-color: #ff0000;
+						border-radius: 0;
+						box-shadow: none;
+						.rangeslider__fill {
+							background-color: #28ac70;
+							border-radius: 0;
+							box-shadow: none;
+						}
+						.rangeslider__handle {
+							box-shadow: none;
+							&:after {
+								display: none;
+							}
+						}
+					}
+					.value {
+						font-family: inherit;
+						color: #000000;
+						text-align: center;
+						.v {
+							font-size: 1.5rem;
 						}
 					}
 				}
@@ -121,11 +193,11 @@
 					max-height: 200px;
 				}
 			}
-			&#configure {
+			&#settings {
 				padding: 2.5rem;
 				background-color: blue;
 
-				.config-item {
+				.item {
 					display: flex;
 					flex-direction: row;
 					align-items: center;

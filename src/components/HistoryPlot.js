@@ -3,7 +3,7 @@ import PropTypes from 'prop-types';
 
 import { AreaChart } from 'react-chartkick';
 
-const HistoryPlot = ({ data, config }) => {
+const HistoryPlot = ({ data, threshold }) => {
 
 	// bound the x-axis with most recent
 	// point (last point in data array)
@@ -15,8 +15,8 @@ const HistoryPlot = ({ data, config }) => {
 		tmin = (new Date(tmax.getTime() - 60000)); // 60 seconds past
 	}
 
-	const rx_above_data = [];
-	const rx_below_data = [];
+	const aboveData = [];
+	const belowData = [];
 
 	// For each rx data point, create 3 data sets:
 	// one for threshold, one for rx data above
@@ -24,21 +24,20 @@ const HistoryPlot = ({ data, config }) => {
 	// threshold.
 	const thresholdData = data.map((point) => {
 
-		rx_above_data.push([ point[0], Math.max(config.threshold_dBm, point[1] )]);
-		rx_below_data.push([ point[0], Math.min(config.threshold_dBm, point[1] )])
+		aboveData.push([ point[0], Math.max(threshold, point[1] )]);
+		belowData.push([ point[0], Math.min(threshold, point[1] )]);
 
-		return [ point[0], config.threshold_dBm ];
+		return [ point[0], threshold ];
 	});
-	const threshold = { name: 'threshold', color: '#1b1f22', points: false, data: thresholdData, dataset: { fill: false, spanGaps: true, borderWidth: 1 }};
-	const rx_above = { name: 'rx_above', color: '#ff0000', points: false, data: rx_above_data, dataset: { borderColor: 'rgba(0,0,0,0)', fill: '-1', lineTension: 0 } };
-	const rx_below = { name: 'rx_below', color: '#28ac70', points: false, data: rx_below_data, dataset: { borderColor: 'rgba(0,0,0,0)', fill: 'bottom', lineTension: 0 } };
+	const thresholdSeries = { name: 'threshold', color: '#1b1f22', points: false, data: thresholdData, dataset: { fill: false, spanGaps: true, borderWidth: 1 }};
+	const aboveSeries = { name: 'above', color: '#ff0000', points: false, data: aboveData, dataset: { borderColor: 'rgba(0,0,0,0)', fill: '-1', lineTension: 0 } };
+	const belowSeries = { name: 'below', color: '#28ac70', points: false, data: belowData, dataset: { borderColor: 'rgba(0,0,0,0)', fill: 'bottom', lineTension: 0 } };
 
-	return (			
+	return (
 		<AreaChart 
 			id='history-1'
 			height='25%'
-			messages={{empty: 'No data'}} 
-			data={[ threshold, rx_above, rx_below ]}
+			data={[ thresholdSeries, aboveSeries, belowSeries ]}
 			library={{ 
 				maintainAspectRatio: false,
 				legend: false, 
@@ -83,5 +82,5 @@ export default HistoryPlot;
 
 HistoryPlot.propTypes = {
 	data: PropTypes.array,
-	config: PropTypes.object
+	threshold: PropTypes.number
 }

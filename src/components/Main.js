@@ -6,7 +6,7 @@ import GaugesPanel from './GaugesPanel';
 import ConfigPanel from './ConfigPanel';
 import ErrorPanel from './ErrorPanel';
 
-const Main = ({ panel, panelTimeout, onConnect, isConnecting, isPlaying, onError, error, config, setConfig, onCloseConfigure, data }) => {
+const Main = ({ panel, panelTimeout, onConnect, isConnecting, isPlaying, onError, error, config, setConfig, onCloseConfigure, onDisconnect, data }) => {
 
 	return (
 		<div className='main'>
@@ -15,10 +15,11 @@ const Main = ({ panel, panelTimeout, onConnect, isConnecting, isPlaying, onError
 				onConnect={onConnect} isConnecting={isConnecting} />
 
 			<GaugesPanel panel={panel} panelTimeout={panelTimeout} 
-				isPlaying={isPlaying} data={data} config={config} />
+				isPlaying={isPlaying} data={data} config={config} setConfig={setConfig} />
 
 			<ConfigPanel panel={panel} panelTimeout={panelTimeout}
-				config={config} setConfig={setConfig} onCloseConfigure={onCloseConfigure} />
+				config={config} setConfig={setConfig} onCloseConfigure={onCloseConfigure}
+				onDisconnect={onDisconnect} />
 
 			<ErrorPanel panel={panel} panelTimeout={panelTimeout}
 				onError={onError} error={error} />
