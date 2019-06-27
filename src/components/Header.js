@@ -1,7 +1,7 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 
-const Header = ({ canPlay, canConfigure, canClear, isPlaying, onPlay, onPause, onClear, onConfigure }) => {
+const Header = ({ canPlay, canConfigure, canClear, isPlaying, onPlay, onPause, onClear, onToggleConfigure }) => {
 
 	return (
 		<header>
@@ -12,7 +12,7 @@ const Header = ({ canPlay, canConfigure, canClear, isPlaying, onPlay, onPause, o
 					onClick={() => { isPlaying ? onPause() : onPlay(); }}
 					disabled={!canPlay}>
 				</button>
-				<span className='appName'>PIMtector&reg;</span>
+				<span className='branding'>PIM<span>tector</span>&trade;</span>
 			</nav>
 			<nav id='right'>
 				<button 
@@ -23,7 +23,7 @@ const Header = ({ canPlay, canConfigure, canClear, isPlaying, onPlay, onPause, o
 				</button>
 				<button 
 					className='icon fa-cog'
-					onClick={() => { onConfigure(); }}
+					onClick={() => { onToggleConfigure(); }}
 					title='Configure'
 					disabled={!canConfigure}>
 				</button>
@@ -36,7 +36,7 @@ Header.propTypes = {
 	canPlay: PropTypes.bool,
 	canConfigure: PropTypes.bool,
 	canClear: PropTypes.bool,
-	onConfigure: PropTypes.func,
+	onToggleConfigure: PropTypes.func,
 	isPlaying: PropTypes.bool,
 	onPlay: PropTypes.func,
 	onPause: PropTypes.func,
