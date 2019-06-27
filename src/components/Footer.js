@@ -1,7 +1,8 @@
 import React from 'react';
 import { useStaticQuery, graphql } from 'gatsby';
+import Logo from './Logo';
 
-const Footer = () => {
+const Footer = ({ panel }) => {
 
 	const data = useStaticQuery(
 		graphql`
@@ -17,10 +18,14 @@ const Footer = () => {
 	);
 
 	return (
+		panel !== 'gauges' &&
 		<footer>
 			<p className='copyright'>
-				&copy;
-				<a target='_blank' rel='noopener noreferrer' href={data.site.siteMetadata.ownerLink}>{data.site.siteMetadata.owner}</a>
+				<a target='_blank' rel='noopener noreferrer' href={data.site.siteMetadata.ownerLink}>&copy;
+					{data.site.siteMetadata.owner}
+				</a>
+			
+				<Logo className='logo' color='#28ac70' />
 			</p>
 		</footer>
 	);
