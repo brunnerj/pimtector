@@ -105,7 +105,8 @@ const initialState = {
 
 	config: {
 		sound: true,
-		threshold_dBm: -110,
+		darktheme: false,
+		threshold_dBm: -105,
 		min_power_dBm: -130,
 		max_power_dBm: -80
 	}
@@ -131,10 +132,12 @@ const reducer = (state, action) => {
 				panelTimeout: true
 			}
 		case 'disconnect':
+			fakeReceiver.disconnect();
 			return {
 				...state,
 				panel: 'connection',
 				panelTimeout: !state.isConnected,
+				isPlaying: false,
 				isConnected: false
 			};
 		case 'play':
@@ -248,13 +251,21 @@ const IndexPage = () => {
 			<div className='wrapper'>
 				<Header 
 					canPlay={state.isConnected && state.error === ''}
-					canConfigure={state.error === ''}
-					canClear={state.buffer !== []}
+					canConfigure={state.error === '' && !state.isConnecting}
+					canClear={state.data.length > 0}
 					isPlaying={state.isPlaying}
 					onPlay={() => dispatch({ type: 'play' })}
 					onPause={() => dispatch({ type: 'pause' })}
 					onClear={() => dispatch({ type: 'clear' })}
-					onConfigure={() => dispatch({ type: 'panel', data: 'settings' })} />
+					onToggleConfigure={() => {
+						if (state.panel === 'settings')
+						{
+							dispatch({ type: 'panel', data: state.isConnected ? 'gauges' : 'connection' });
+						} else {
+							dispatch({ type: 'panel', data: 'settings' });
+						}
+					}}
+				/>
 
 				<Main
 					panel={state.panel}
@@ -262,16 +273,16 @@ const IndexPage = () => {
 					onConnect={() => dispatch({ type: 'connect', data: dispatch })}
 					onDisconnect={() => dispatch({ type: 'disconnect' })}
 					isConnecting={state.isConnecting}
+					isConnected={state.isConnected}
 					isPlaying={state.isPlaying}
 					data={state.data}
 					onError={(err) => dispatch({ type: 'error', data: err })}
 					error={state.error}
 					config={state.config}
 					setConfig={(config) => dispatch({ type: 'config', data: config })}
-					onDisconnect={() => dispatch({ type: 'disconnect' })}
-					onCloseConfigure={() => dispatch({ type: 'panel', data: state.isConnected ? 'gauges' : 'connection' })} />
+				/>
 
-				<Footer />
+				<Footer panel={state.panel} />
 			</div>
 		</>
 	);
