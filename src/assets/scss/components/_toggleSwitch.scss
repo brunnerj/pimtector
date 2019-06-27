@@ -1,14 +1,19 @@
 /* ToggleSwitch */
 
-	$aspect-ratio: 1.625;
-	$thumb-spacing: 0.125rem;
-	$thumb-size: 2.5rem; // 2.75rem - 2 * 0.125rem = 2.5rem
-	$thumb-slide-size: 1.84375rem; // 2.75rem * (1.625 - 1) + 0.125rem 
+	$switch-height: 	1.75rem;
+	$aspect-ratio: 		1.625;
+	$thumb-spacing: 	0.125rem;
+	$thumb-size: 		$switch-height - (2 * $thumb-spacing);
+	$thumb-slide-size: 	$switch-height * ($aspect-ratio - 1) + $thumb-spacing;
+
+	$switch-on-bg:		_palette(theme);
+	$switch-off-bg:		_palette(theme-off);
+	$thumb-bg:			_palette(theme-fg);
 
 	.toggle-switch {
 		display: inline-block;
-		height: _size(element-height);
-		width: calc(#{_size(element-height)} * #{$aspect-ratio});
+		height: $switch-height;
+		width: $switch-height * $aspect-ratio;
 
 		cursor: pointer !important;
 		user-select: none !important;
@@ -27,7 +32,7 @@
 			&::before {
 				height: inherit;
 				width: inherit;
-				border-radius: calc(#{_size(element-height)} / 2);
+				border-radius: $switch-height / 2;
 				will-change: background;
 				@include vendor('transition', (
 					'background #{_duration(transition)} ease-out'
@@ -39,7 +44,7 @@
 				height: $thumb-size;
 				width: $thumb-size;
 				border-radius: $thumb-size / 2;
-				background: #fff;
+				background: $thumb-bg;
 				will-change: transform;
 				@include vendor('transition', (
 					'transform #{_duration(transition)} ease-out'
@@ -49,7 +54,7 @@
 
 		&.on {
 			&::before {
-				background: _palette(bg-header) !important;
+				background: $switch-on-bg !important;
 			}
 			&::after {
 				@include vendor('transform', 'translateX(#{$thumb-slide-size})');
@@ -58,7 +63,7 @@
 
 		&.off {
 			&::before {
-				background:#aaa !important;
+				background: $switch-off-bg !important;
 			}
 			&::after {
 				@include vendor('transform', 'translateX(#{$thumb-spacing})');

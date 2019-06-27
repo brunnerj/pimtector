@@ -27,7 +27,7 @@
 		*/
 		width: 100%;
 		z-index: 4;
-		background-color: _palette(bg-header);
+		background-color: _palette(theme);
 		box-shadow: 0 0 3px 0 _palette(border-dark);
 		/*
 		text-align: center;
@@ -162,6 +162,14 @@
 				}
 			}
 			*/
+		}
+
+		.branding {
+			text-transform: uppercase;
+			font-weight: 600;
+			span {
+				font-size: 80%;
+			}
 		}
 
 		.body.is-article-visible & {

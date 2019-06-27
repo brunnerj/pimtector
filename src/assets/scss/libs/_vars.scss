@@ -42,7 +42,12 @@
 		border-bg-alt:				rgba(255,255,255,0.175),
 
 		bg-light:					#ffffff,
-		bg-header:					#28ac70,
 		fg-dark:					#000000,
 		border-dark:				#000000,
+
+		theme:						#28ac70,
+		theme-dark:					darken(#28ac70, 20%),
+		theme-fg:					#ffffff,
+		theme-off:					#aaaaaa,
+		error:						#ff0000
 	);

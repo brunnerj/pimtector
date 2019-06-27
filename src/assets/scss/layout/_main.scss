@@ -20,27 +20,89 @@
 		.panel {
 			@include vendor('display', 'flex');
 			@include vendor('flex-direction', 'column');
-			@include vendor('align-items', 'flex-start');
+			@include vendor('align-items', 'center');
 	
 			@include vendor('transform', 'translateY(0.25rem)');
 			@include vendor('transition', (
 				'opacity #{_duration(article)} ease-in-out',
 				'transform #{_duration(article)} ease-in-out'
 			));
-			//@include padding(2.5rem, 2.5rem, (0, 0, 1.5rem, 0)); //(2rem, 0, 1rem, 0));
 			width: 100%;
 			position: relative;
 			opacity: 0;
 
 			&#connection {
-				background-color: steelblue;
-				color: _palette(fg-dark);
+				color: _palette(bg);
+				@include vendor('justify-content', 'space-between');
+
+				.lead-in,
+				.main-tag,
+				.sub-tag,
+				.button-box {
+					text-align: center;
+				}
+
+				.lead-in {
+					margin-top: 9rem;
+					margin-bottom: 2.75rem;
+					text-transform: uppercase;
+					font-weight: 600;
+
+					span {
+						font-size: 80%;
+					}
+				}
+
+				.main-tag {
+					font-size: 4rem;
+					line-height: 4rem;
+					span {
+						color: _palette(theme);
+						font-weight: 600;
+					}
+				}
+
+				.sub-tag {
+					margin-top: 0.5rem;
+					margin-bottom: 3.5rem;
+					font-size: 1.4rem;
+					color: _palette(theme-off);
+				}
+
+				button {
+					background-color: _palette(theme);
+					box-shadow: none;
+
+					&:hover {
+						background-color: _palette(theme-dark);
+					}
+			
+					&:active {
+						background-color: _palette(theme-dark);
+					}
+
+				}
+
+				.bg {
+					position: relative;
+					width: 100%;
+					height: 100%;
+					overflow: hidden;
+					margin: 2rem auto 0 auto;
+
+					img {
+						position: absolute;
+						width: 100%;
+						height: 100%;
+					}
+				}
 
 				.spinner {
 					display: none;
 					flex-direction: column;
 					justify-content: center;
 					text-align: center;
+					color: _palette(fg-dark);
 					position: absolute;
 					top: 0;
 					left: 0;
@@ -50,20 +112,21 @@
 					&.active {
 						display: flex;
 					}
-				}
-		
-				.signal {
-					border: 5px solid _palette(bg-overlay);
-					border-radius: 30px;
-					position: relative;
-					left: 50%;
-					margin-left: -15px;
-					width: 30px;
-					height: 30px;
-					opacity: 0;
-				 
-					animation: pulsate 1s ease-out;
-					animation-iteration-count: infinite;
+
+					&:before {
+						content: '';
+						border: 5px solid _palette(bg-overlay);
+						border-radius: 30px;
+						position: relative;
+						left: 50%;
+						margin-left: -15px;
+						width: 30px;
+						height: 30px;
+						opacity: 0;
+					 
+						animation: pulsate 1s ease-out;
+						animation-iteration-count: infinite;
+					}
 				}
 
 				@keyframes pulsate {
@@ -80,9 +143,9 @@
 					}
 				}
 			}
+
 			&#gauges {
 				@include vendor('justify-content', 'space-between');
-				@include vendor('align-items', 'center');
 	
 				.gauge {
 					position: relative;
@@ -109,7 +172,7 @@
 						
 						.needle {
 							position: absolute;
-							background-color: #28ac70;
+							background-color: _palette(theme);
 							border-radius: 100%;
 							width: 30%;
 							height: 30%;
@@ -129,7 +192,7 @@
 								width: 0;
 								height: 0;
 								border: 1em solid transparent;
-								border-top-color: #28ac70;
+								border-top-color: _palette(theme);
 								border-bottom: 0;
 								margin-left: -1em;
 								margin-bottom: -0.8em;
@@ -162,11 +225,11 @@
 					min-width: 250px;
 					margin-top: -4rem;
 					.rangeslider {
-						background-color: #ff0000;
+						background-color: _palette(error);
 						border-radius: 0;
 						box-shadow: none;
 						.rangeslider__fill {
-							background-color: #28ac70;
+							background-color: _palette(theme);
 							border-radius: 0;
 							box-shadow: none;
 						}
@@ -193,25 +256,53 @@
 					max-height: 200px;
 				}
 			}
+
 			&#settings {
-				padding: 2.5rem;
-				background-color: blue;
+				padding: 2.5rem 0.5rem;
+
+				h2.major {
+					color: _palette(bg);
+				}
+
+				.divider {
+					background-color: _palette(theme);
+					width: 80%;
+					height: 2px;
+					margin: 1rem 0;
+				}
 
 				.item {
+					width: 16rem;
 					display: flex;
 					flex-direction: row;
-					align-items: center;
+					align-items: flex-start;
 					margin-bottom: 1rem;
 
 					label {
+						color: _palette(bg);
 						margin: 0 0.6rem;
 						font-size: 1.4rem;
 						text-transform: none;
 					}
 				}
+
+				button {
+					background-color: _palette(theme);
+					box-shadow: none;
+
+					&:hover {
+						background-color: _palette(theme-dark);
+					}
+			
+					&:active {
+						background-color: _palette(theme-dark);
+					}
+
+				}
 			}
+
 			&#error {
-				background-color: red;
+				background-color: _palette(error);
 			}
 
 			&.timeout {

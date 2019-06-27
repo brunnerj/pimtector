@@ -12,16 +12,29 @@
 			'filter #{_duration(article)} ease-in-out',
 			'opacity #{_duration(article)} ease-in-out',
 		));
+		position: fixed;
+		bottom: 0;
 		width: 100%;
+		z-index: 9;
 		text-align: center;
 		color: _palette(fg-dark);
+		background-color: _palette(bg-light);
 
 		.copyright {
 			letter-spacing: _font(letter-spacing);
 			font-size: 0.6rem;
-			opacity: 0.75;
 			margin: 0.6rem 0;
 			text-transform: uppercase;
+		}
+
+		.logo {
+			position: absolute;
+			top: 0;
+			width: 30px;
+		}
+
+		a {
+			border-color: _palette(fg-dark);
 		}
 
 		.body.is-article-visible & {
