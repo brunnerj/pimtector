@@ -77,6 +77,11 @@ const Gauge = ({ value, unit, min, max, threshold, passColor, failColor }) => {
 				<div className='value'>{valueString}</div>
 				<div className='unit'>{unit}</div>
 			</div>
+
+			<div className='gauge-scale'>
+				<span className='min'>{min}</span>
+				<span className='max'>{max}</span>
+			</div>
 		</div>
 	);
 };
