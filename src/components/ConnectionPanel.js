@@ -22,14 +22,13 @@ const ConnectionPanel = ({ panel, panelTimeout, onConnect, isConnecting }) => {
 					Connect your Bluetooth LE receiver to get started.
 				</div>
 
-				<div className='button-box'>
-					<button className='icon fa-link'
-						onClick={() => onConnect()}
-						title='Connect'>Connect
-					</button>
-				</div>
+				<button className='icon fa-link'
+					onClick={() => onConnect()}
+					title='Connect'>Connect
+				</button>
 
 			</div>
+			
 			<div className='bg'>
 				<img alt='' src={Showcase} />
 				<img className='wand-left' alt='' src={LeftWand} />
