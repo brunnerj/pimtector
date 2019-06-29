@@ -1,10 +1,19 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 
-const Header = ({ canPlay, canConfigure, canClear, isPlaying, onPlay, onPause, onClear, onToggleConfigure }) => {
+const Header = ({ 
+	darktheme,
+	canPlay, 
+	canConfigure, 
+	canClear, 
+	isPlaying, 
+	onPlay, 
+	onPause, 
+	onClear, 
+	onToggleConfigure }) => {
 
 	return (
-		<header>
+		<header className={'theme-' + (darktheme ? 'dark' : 'light')}>
 			<nav id='left'>
 				<button 
 					className={'icon ' + (isPlaying ? 'fa-pause' : 'fa-play')}

@@ -2,7 +2,7 @@ import React from 'react';
 import { useStaticQuery, graphql } from 'gatsby';
 import Logo from './Logo';
 
-const Footer = ({ panel }) => {
+const Footer = ({ darktheme, panel }) => {
 
 	const data = useStaticQuery(
 		graphql`
@@ -19,7 +19,7 @@ const Footer = ({ panel }) => {
 
 	return (
 		panel !== 'gauges' &&
-		<footer>
+		<footer className={'theme-' + (darktheme ? 'dark' : 'light')}>
 			<p className='copyright'>
 				<a target='_blank' rel='noopener noreferrer' href={data.site.siteMetadata.ownerLink}>&copy;
 					{data.site.siteMetadata.owner}
