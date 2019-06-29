@@ -3,7 +3,7 @@ import PropTypes from 'prop-types';
 
 import { AreaChart } from 'react-chartkick';
 
-const HistoryPlot = ({ data, threshold }) => {
+const HistoryPlot = ({ data, threshold, thresholdLineColor, passColor, failColor }) => {
 
 	// bound the x-axis with most recent
 	// point (last point in data array)
@@ -29,9 +29,9 @@ const HistoryPlot = ({ data, threshold }) => {
 
 		return [ point[0], threshold ];
 	});
-	const thresholdSeries = { name: 'threshold', color: '#1b1f22', points: false, data: thresholdData, dataset: { fill: false, spanGaps: true, borderWidth: 1 }};
-	const aboveSeries = { name: 'above', color: '#ff0000', points: false, data: aboveData, dataset: { borderColor: 'rgba(0,0,0,0)', fill: '-1', lineTension: 0 } };
-	const belowSeries = { name: 'below', color: '#28ac70', points: false, data: belowData, dataset: { borderColor: 'rgba(0,0,0,0)', fill: 'bottom', lineTension: 0 } };
+	const thresholdSeries = { name: 'threshold', color: thresholdLineColor, points: false, data: thresholdData, dataset: { fill: false, spanGaps: true, borderWidth: 1 }};
+	const aboveSeries = { name: 'above', color: failColor, points: false, data: aboveData, dataset: { borderColor: 'rgba(0,0,0,0)', fill: '-1', lineTension: 0 } };
+	const belowSeries = { name: 'below', color: passColor, points: false, data: belowData, dataset: { borderColor: 'rgba(0,0,0,0)', fill: 'bottom', lineTension: 0 } };
 
 	return (
 		<AreaChart 
@@ -82,5 +82,14 @@ export default HistoryPlot;
 
 HistoryPlot.propTypes = {
 	data: PropTypes.array,
-	threshold: PropTypes.number
+	threshold: PropTypes.number,
+	thresholdLineColor: PropTypes.string,
+	passColor: PropTypes.string,
+	failColor: PropTypes.string
+}
+
+HistoryPlot.defaultProps = {
+	thresholdLineColor: '#000000',
+	passColor: '#00ff00',
+	failColor: '#ff0000'
 }

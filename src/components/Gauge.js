@@ -1,8 +1,8 @@
 import React from 'react';
+import PropTypes from 'prop-types';
 import { PieChart } from 'react-chartkick';
-//import PropTypes from 'prop-types';
 
-const GaugePlot = ({ value, min, max }) => {
+const GaugePlot = ({ value, min, max, passColor, failColor }) => {
 
 	const min_percent = 0;
 	const max_percent = 75;
@@ -18,7 +18,7 @@ const GaugePlot = ({ value, min, max }) => {
 		<PieChart id='gauge-1' 
 			donut={true}
 			data={series}
-			colors={['#28ac70', '#ff0000', 'rgba(0,0,0,0)']}
+			colors={[passColor, failColor, 'rgba(0,0,0,0)']}
 			library={{
 				cutoutPercentage: 75,
 				circumference: 2 * Math.PI,
@@ -37,7 +37,12 @@ const GaugePlot = ({ value, min, max }) => {
 	);
 };
 
-const Gauge = ({ value, unit, min, max, threshold }) => {
+GaugePlot.defaultProps = {
+	passColor: '#00ff00',
+	failColor: '#ff0000'
+}
+
+const Gauge = ({ value, unit, min, max, threshold, passColor, failColor }) => {
 	
 	const valueString = value ? value.toFixed(1) : '--';
 
@@ -65,7 +70,7 @@ const Gauge = ({ value, unit, min, max, threshold }) => {
 	return (
 		<div className='gauge'>
 
-			<GaugePlot value={threshold} min={min} max={max} />
+			<GaugePlot passColor={passColor} failColor={failColor} value={threshold} min={min} max={max} />
 
 			<div className='readout'>
 				<div className='needle' style={needleStyle}></div>
@@ -78,5 +83,17 @@ const Gauge = ({ value, unit, min, max, threshold }) => {
 
 export default Gauge;
 
-//Gauge.propTypes = {
-//}
+Gauge.propTypes = {
+	value: PropTypes.number,
+	unit: PropTypes.string,
+	min: PropTypes.number,
+	max: PropTypes.number,
+	threshold: PropTypes.number,
+	passColor: PropTypes.string,
+	failColor: PropTypes.string
+}
+
+Gauge.defaultProps = {
+	passColor: '#00ff00',
+	failColor: '#ff0000'
+}
