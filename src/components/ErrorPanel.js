@@ -6,13 +6,13 @@ import Panel from './Panel';
 const ErrorPanel = ({ panel, panelTimeout, onError, error }) => {
 
 	return (
-		<Panel id='error' panel={panel} panelTimeout={panelTimeout}>
+		<Panel id='error' hideTitle={true} panel={panel} panelTimeout={panelTimeout}>
 
 			<p>{error}</p>
 
-			<button className='icon fa-times'
+			<button className='icon fa-check-circle'
 				onClick={() => onError('')}
-				title='Ok'>Ok
+				title='Clear'>Clear
 			</button>
 
 		</Panel>
