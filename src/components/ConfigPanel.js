@@ -4,7 +4,7 @@ import PropTypes from 'prop-types';
 import Panel from './Panel';
 import ToggleSwitch from './ToggleSwitch';
 
-const ConfigPanel = ({ panel, panelTimeout, config, setConfig, isConnected, onDisconnect }) => {
+const ConfigPanel = ({ panel, panelTimeout, config, setConfig, isConnected, onDisconnect, onError }) => {
 
 	return (
 		<Panel id='settings' hideTitle={true} panel={panel} panelTimeout={panelTimeout}>
@@ -22,6 +22,15 @@ const ConfigPanel = ({ panel, panelTimeout, config, setConfig, isConnected, onDi
 			<div className='divider' />
 
 			<div className='item'>
+				<button className='icon fa-info-circle'
+					onClick={() => { setConfig({ ...config, showtips: true })}}
+					disabled={config.showtips}
+					title='Show tips'>
+					Show tips
+				</button>
+			</div>
+
+			<div className='item'>
 				<button className='icon fa-unlink'
 					onClick={onDisconnect}
 					disabled={!isConnected}
@@ -30,6 +39,16 @@ const ConfigPanel = ({ panel, panelTimeout, config, setConfig, isConnected, onDi
 				</button>
 			</div>
 		
+			<div className='divider' />
+
+			<div className='item'>
+				<button className='icon fa-bomb'
+					onClick={() => { onError('This is a forced error!') } }
+					title='Force Error'>
+					Force Error
+				</button>
+			</div>
+
 		</Panel>
 	);
 };
