@@ -1,49 +1,51 @@
-///
-/// Dimension by HTML5 UP
-/// html5up.net | @ajlkn
-/// Free for personal and commercial use under the CCA 3.0 license (html5up.net/license)
-///
 
-/* Footer */
+footer {
+	@include vendor('transition', (
+		'transform #{_duration(article)} ease-in-out',
+		'filter #{_duration(article)} ease-in-out',
+		'opacity #{_duration(article)} ease-in-out',
+	));
+	position: fixed;
+	bottom: 0;
+	width: 100%;
+	z-index: 9;
+	text-align: center;
+	color: _palette(theme-light-fg);
+	background-color: _palette(theme-light-bg);
 
-	footer {
-		@include vendor('transition', (
-			'transform #{_duration(article)} ease-in-out',
-			'filter #{_duration(article)} ease-in-out',
-			'opacity #{_duration(article)} ease-in-out',
-		));
-		position: fixed;
-		bottom: 0;
-		width: 100%;
-		z-index: 9;
-		text-align: center;
-		color: _palette(fg-dark);
-		background-color: _palette(bg-light);
+	.copyright {
+		letter-spacing: _font(letter-spacing);
+		font-size: 0.6rem;
+		margin: 0.6rem 0;
+		text-transform: uppercase;
+	}
 
-		.copyright {
-			letter-spacing: _font(letter-spacing);
-			font-size: 0.6rem;
-			margin: 0.6rem 0;
-			text-transform: uppercase;
-		}
+	.logo {
+		position: absolute;
+		top: 0;
+		width: 30px;
+	}
 
-		.logo {
-			position: absolute;
-			top: 0;
-			width: 30px;
-		}
+	a {
+		border-color: _palette(theme-light-fg);
+	}
+
+	&.theme-dark {
+		color: _palette(theme-dark-fg);
+		background-color: _palette(theme-dark-bg);
 
 		a {
-			border-color: _palette(fg-dark);
-		}
-
-		.body.is-article-visible & {
-			@include vendor('transform', 'scale(0.95)');
-			@include vendor('filter', 'blur(0.1rem)');
-			opacity: 0;
-		}
-
-		.body.is-loading & {
-			opacity: 0;
+			border-color: _palette(theme-dark-fg);
 		}
 	}
+
+	.body.is-article-visible & {
+		@include vendor('transform', 'scale(0.95)');
+		@include vendor('filter', 'blur(0.1rem)');
+		opacity: 0;
+	}
+
+	.body.is-loading & {
+		opacity: 0;
+	}
+}

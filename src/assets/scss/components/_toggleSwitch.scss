@@ -1,73 +1,78 @@
-/* ToggleSwitch */
 
-	$switch-height: 	1.75rem;
-	$aspect-ratio: 		1.625;
-	$thumb-spacing: 	0.125rem;
-	$thumb-size: 		$switch-height - (2 * $thumb-spacing);
-	$thumb-slide-size: 	$switch-height * ($aspect-ratio - 1) + $thumb-spacing;
+$switch-height: 	1.75rem;
+$aspect-ratio: 		1.625;
+$thumb-spacing: 	0.125rem;
+$thumb-size: 		$switch-height - (2 * $thumb-spacing);
+$thumb-slide-size: 	$switch-height * ($aspect-ratio - 1) + $thumb-spacing;
 
-	$switch-on-bg:		_palette(theme);
-	$switch-off-bg:		_palette(theme-off);
-	$thumb-bg:			_palette(theme-fg);
+$switch-on-bg:		_palette(switch-on-bg);
+$switch-off-bg:		_palette(switch-off-bg);
 
-	.toggle-switch {
-		display: inline-block;
-		height: $switch-height;
-		width: $switch-height * $aspect-ratio;
+.toggle-switch {
+	display: inline-block;
+	height: $switch-height;
+	width: $switch-height * $aspect-ratio;
 
-		cursor: pointer !important;
-		user-select: none !important;
-		position: relative !important;
+	cursor: pointer !important;
+	user-select: none !important;
+	position: relative !important;
 
-		&.on,
-		&.off {
+	&.on,
+	&.off {
 
-			&::before,
-			&::after {
-				content: '';
-				left: 0;
-				position: absolute !important;
-			}
-
-			&::before {
-				height: inherit;
-				width: inherit;
-				border-radius: $switch-height / 2;
-				will-change: background;
-				@include vendor('transition', (
-					'background #{_duration(transition)} ease-out'
-				));
-			}
-
-			&::after {
-				top: $thumb-spacing;
-				height: $thumb-size;
-				width: $thumb-size;
-				border-radius: $thumb-size / 2;
-				background: $thumb-bg;
-				will-change: transform;
-				@include vendor('transition', (
-					'transform #{_duration(transition)} ease-out'
-				));
-			}
+		&::before,
+		&::after {
+			content: '';
+			left: 0;
+			position: absolute !important;
 		}
 
-		&.on {
-			&::before {
-				background: $switch-on-bg !important;
-			}
-			&::after {
-				@include vendor('transform', 'translateX(#{$thumb-slide-size})');
-			}
+		&::before {
+			height: inherit;
+			width: inherit;
+			border-radius: $switch-height / 2;
+			will-change: background;
+			@include vendor('transition', (
+				'background #{_duration(transition)} ease-out'
+			));
 		}
 
-		&.off {
-			&::before {
-				background: $switch-off-bg !important;
-			}
-			&::after {
-				@include vendor('transform', 'translateX(#{$thumb-spacing})');
-			}
+		&::after {
+			top: $thumb-spacing;
+			height: $thumb-size;
+			width: $thumb-size;
+			border-radius: $thumb-size / 2;
+			background: _palette(theme-light-bg);;
+			will-change: transform;
+			@include vendor('transition', (
+				'transform #{_duration(transition)} ease-out'
+			));
 		}
-
 	}
+
+	&.on {
+		&::before {
+			background: $switch-on-bg !important;
+		}
+		&::after {
+			@include vendor('transform', 'translateX(#{$thumb-slide-size})');
+		}
+	}
+
+	&.off {
+		&::before {
+			background: $switch-off-bg !important;
+		}
+		&::after {
+			@include vendor('transform', 'translateX(#{$thumb-spacing})');
+		}
+	}
+
+}
+
+.main.theme-dark {
+	.toggle-switch.on::after,
+	.toggle-switch.off::after {
+		background: _palette(theme-dark-bg);
+	}
+}

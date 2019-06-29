@@ -45,9 +45,25 @@
 		fg-dark:					#000000,
 		border-dark:				#000000,
 
-		theme:						#28ac70,
-		theme-dark:					darken(#28ac70, 20%),
-		theme-fg:					#ffffff,
-		theme-off:					#aaaaaa,
-		error:						#ff0000
+
+		error-color:				#ff0000,
+		error-color-darker:			darken(#ff0000, 20%),
+
+		theme-color:				#28ac70, /* rgb: 40, 172, 112 */
+		theme-color-darker:			darken(#28ac70, 20%),
+		theme-color-overlay:		rgba(40,172,112,0.5),
+
+		theme-neutral:				#aaaaaa,
+
+		theme-light-fg:				#1b1f22,
+		theme-light-bg:				#ffffff,
+		theme-light-overlay:		rgba(255,255,255,0.8),
+		theme-light-shadow:			rgba(0,0,0,0.1),
+
+		theme-dark-fg:				#ffffff,
+		theme-dark-bg:				#1b1f22,
+		theme-dark-overlay:			rgba(0,0,0,0.8),
+
+		switch-on-bg:				#28ac70,
+		switch-off-bg:				#aaaaaa
 	);
