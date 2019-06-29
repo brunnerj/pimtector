@@ -106,6 +106,7 @@ const initialState = {
 	config: {
 		sound: true,
 		darktheme: false,
+		showtips: true,
 		threshold_dBm: -105,
 		min_power_dBm: -130,
 		max_power_dBm: -80
@@ -172,7 +173,7 @@ const reducer = (state, action) => {
 
 			if (error === '' ) {
 				// no errors - pick new panel
-				panel = state.isConnected ? 'gauges' : 'connect';
+				panel = state.isConnected ? 'gauges' : 'connection';
 			} else {
 				panel = 'error';
 			}
@@ -250,13 +251,10 @@ const IndexPage = () => {
 
 			<div className='wrapper'>
 				<Header 
+					darktheme={state.config.darktheme}
+
 					canPlay={state.isConnected && state.error === ''}
 					canConfigure={state.error === '' && !state.isConnecting}
-					canClear={state.data.length > 0}
-					isPlaying={state.isPlaying}
-					onPlay={() => dispatch({ type: 'play' })}
-					onPause={() => dispatch({ type: 'pause' })}
-					onClear={() => dispatch({ type: 'clear' })}
 					onToggleConfigure={() => {
 						if (state.panel === 'settings')
 						{
@@ -265,9 +263,16 @@ const IndexPage = () => {
 							dispatch({ type: 'panel', data: 'settings' });
 						}
 					}}
+
+					isPlaying={state.isPlaying}
+					canClear={state.data.length > 0}
+					onPlay={() => dispatch({ type: 'play' })}
+					onPause={() => dispatch({ type: 'pause' })}
+					onClear={() => dispatch({ type: 'clear' })}
 				/>
 
 				<Main
+					darktheme={state.config.darktheme}
 					panel={state.panel}
 					panelTimeout={state.panelTimeout}
 					onConnect={() => dispatch({ type: 'connect', data: dispatch })}
@@ -282,7 +287,7 @@ const IndexPage = () => {
 					setConfig={(config) => dispatch({ type: 'config', data: config })}
 				/>
 
-				<Footer panel={state.panel} />
+				<Footer darktheme={state.config.darktheme} panel={state.panel} />
 			</div>
 		</>
 	);

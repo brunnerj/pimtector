@@ -5,7 +5,7 @@ const ToggleSwitch = ({ enabled, onChange }) => {
 
 	const [ on, setOn ] = useState(!!enabled);
 
-	const switchClass = 'toggle-switch' + (on ? ' on ' : ' off ');
+	const switchClass = 'toggle-switch' + (on ? ' on' : ' off');
 
 	function handleClick(e) {
 		e.preventDefault();
