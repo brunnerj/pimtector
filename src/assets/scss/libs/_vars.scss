@@ -41,17 +41,9 @@
 		border-bg:					rgba(255,255,255,0.075),
 		border-bg-alt:				rgba(255,255,255,0.175),
 
-		bg-light:					#ffffff,
-		fg-dark:					#000000,
-		border-dark:				#000000,
-
-
-		error-color:				#ff0000,
-		error-color-darker:			darken(#ff0000, 20%),
-
-		theme-color:				#28ac70, /* rgb: 40, 172, 112 */
-		theme-color-darker:			darken(#28ac70, 20%),
-		theme-color-overlay:		rgba(40,172,112,0.5),
+		theme-color:				#10069F, /* rgb: 10, 6, 159 */
+		theme-color-darker:			darken(#10069F, 20%),
+		theme-color-overlay:		rgba(10, 6, 159, 0.5),
 
 		theme-neutral:				#aaaaaa,
 
@@ -64,6 +56,9 @@
 		theme-dark-bg:				#1b1f22,
 		theme-dark-overlay:			rgba(0,0,0,0.8),
 
-		switch-on-bg:				#28ac70,
+		error-color:				#ff0000,
+		error-color-darker:			darken(#ff0000, 20%),
+
+		switch-on-bg:				lighten(#10069F, 50%),
 		switch-off-bg:				#aaaaaa
 	);

@@ -34,6 +34,7 @@ header {
 
 	/* header fg theme colors are reversed from normal */
 	&.theme-dark {
+		background-color: _palette(switch-on-bg);
 		box-shadow: 0 0 3px 0 _palette(theme-dark-fg);
 		.branding {
 			color: _palette(theme-light-fg);

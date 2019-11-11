@@ -74,5 +74,6 @@ button {
 }
 
 .theme-dark button {
-	color: _palette(theme-dark-bg); /* buttons have a dark bg */
+	color: _palette(theme-dark-bg); 
+	background-color: _palette(switch-on-bg) !important;
 }
