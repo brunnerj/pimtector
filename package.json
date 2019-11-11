@@ -14,22 +14,22 @@
     "test": "echo \"Write tests!\""
   },
   "dependencies": {
-    "chart.js": "^2.8.0",
-    "gatsby": "^2.8.4",
-    "gatsby-plugin-canonical-urls": "^2.0.13",
-    "gatsby-plugin-manifest": "^2.1.1",
-    "gatsby-plugin-react-helmet": "^3.0.12",
+    "chart.js": "^2.9.2",
+    "gatsby": "^2.17.11",
+    "gatsby-plugin-canonical-urls": "^2.1.14",
+    "gatsby-plugin-manifest": "^2.2.27",
+    "gatsby-plugin-react-helmet": "^3.1.14",
     "gatsby-plugin-s3": "^0.2.5",
-    "gatsby-plugin-sass": "^2.0.11",
-    "node-sass": "^4.12.0",
-    "react": "^16.8.6",
-    "react-chartkick": "^0.3.1",
-    "react-dom": "^16.8.6",
+    "gatsby-plugin-sass": "^2.1.21",
+    "node-sass": "^4.13.0",
+    "react": "^16.11.0",
+    "react-chartkick": "^0.3.3",
+    "react-dom": "^16.11.0",
     "react-helmet": "^5.2.1",
     "react-rangeslider": "^2.2.0"
   },
   "devDependencies": {
-    "prettier": "^1.17.1"
+    "prettier": "^1.19.1"
   },
   "repository": {
     "type": "git",
