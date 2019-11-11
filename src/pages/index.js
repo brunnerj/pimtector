@@ -107,9 +107,16 @@ const initialState = {
 		sound: true,
 		darktheme: false,
 		showtips: true,
+		
 		threshold_dBm: -105,
 		min_power_dBm: -130,
-		max_power_dBm: -80
+		max_power_dBm: -80,
+
+		pass_color: '#28ac70', // theme-color in _vars.scss
+		fail_color: '#ff0000', // error-color in _vars.scss
+		threshold_line_dark: '#1b1f22', // theme-light-fg
+		threshold_line_light: '#ffffff' // theme-dark-fg
+
 	}
 };
 
