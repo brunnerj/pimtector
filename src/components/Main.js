@@ -2,13 +2,26 @@ import React from 'react';
 import PropTypes from 'prop-types';
 
 import ConnectionPanel from './ConnectionPanel';
-import GaugesPanel from './GaugesPanel';
+import MeasurementPanel from './MeasurementPanel';
 import ConfigPanel from './ConfigPanel';
 import ErrorPanel from './ErrorPanel';
 import TipsPanel from '../components/TipsPanel';
 
 
-const Main = ({ darktheme, panel, panelTimeout, onConnect, isConnecting, isConnected, isPlaying, onError, error, config, setConfig, onDisconnect, data }) => {
+const Main = ({ 
+	darktheme, 
+	panel, 
+	panelTimeout, 
+	onConnect, 
+	isConnecting, 
+	isConnected, 
+	isPlaying, 
+	onError, 
+	error, 
+	config, 
+	setConfig, 
+	onDisconnect, 
+	data }) => {
 
 	const cls = 'main theme-' + (darktheme ? 'dark' : 'light');
 
@@ -18,8 +31,8 @@ const Main = ({ darktheme, panel, panelTimeout, onConnect, isConnecting, isConne
 			<ConnectionPanel panel={panel} panelTimeout={panelTimeout}
 				onConnect={onConnect} isConnecting={isConnecting} />
 
-			<GaugesPanel panel={panel} panelTimeout={panelTimeout} 
-				isPlaying={isPlaying} data={data} config={config} setConfig={setConfig} />
+			<MeasurementPanel isPlaying={isPlaying} panel={panel} panelTimeout={panelTimeout} 
+				data={data} config={config} setConfig={setConfig} />
 
 			<TipsPanel panel={panel} panelTimeout={panelTimeout}
 				config={config} 

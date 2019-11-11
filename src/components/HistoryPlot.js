@@ -3,7 +3,7 @@ import PropTypes from 'prop-types';
 
 import { AreaChart } from 'react-chartkick';
 
-const HistoryPlot = ({ data, threshold, thresholdLineColor, passColor, failColor }) => {
+const HistoryPlot = ({ data, config }) => {
 
 	// bound the x-axis with most recent
 	// point (last point in data array)
@@ -18,6 +18,8 @@ const HistoryPlot = ({ data, threshold, thresholdLineColor, passColor, failColor
 	const aboveData = [];
 	const belowData = [];
 
+	const threshold = config.threshold_dBm;
+
 	// For each rx data point, create 3 data sets:
 	// one for threshold, one for rx data above
 	// the threshold, and one for data below the
@@ -29,6 +31,12 @@ const HistoryPlot = ({ data, threshold, thresholdLineColor, passColor, failColor
 
 		return [ point[0], threshold ];
 	});
+
+	const passColor = config.pass_color;
+	const failColor = config.fail_color;
+
+	const thresholdLineColor = config.darktheme ? config.threshold_line_light : config.threshold_line_dark;
+
 	const thresholdSeries = { name: 'threshold', color: thresholdLineColor, points: false, data: thresholdData, dataset: { fill: false, spanGaps: true, borderWidth: 1 }};
 	const aboveSeries = { name: 'above', color: failColor, points: false, data: aboveData, dataset: { borderColor: 'rgba(0,0,0,0)', fill: '-1', lineTension: 0 } };
 	const belowSeries = { name: 'below', color: passColor, points: false, data: belowData, dataset: { borderColor: 'rgba(0,0,0,0)', fill: 'bottom', lineTension: 0 } };
@@ -46,18 +54,17 @@ const HistoryPlot = ({ data, threshold, thresholdLineColor, passColor, failColor
 						type: 'time',
 						position: 'bottom',
 						time: {
-							min: tmin,
-							max: tmax,
 							tooltipFormat: 'h:mm:ss a'
 						},
 						ticks: {
 							display: false,
+							min: tmin,
+							max: tmax
 						},
 						gridLines: {
 							display: false,
 							drawTicks: false,
 							drawBorder: false
-
 						}
 					}],
 					yAxes: [{
@@ -82,14 +89,5 @@ export default HistoryPlot;
 
 HistoryPlot.propTypes = {
 	data: PropTypes.array,
-	threshold: PropTypes.number,
-	thresholdLineColor: PropTypes.string,
-	passColor: PropTypes.string,
-	failColor: PropTypes.string
-}
-
-HistoryPlot.defaultProps = {
-	thresholdLineColor: '#000000',
-	passColor: '#00ff00',
-	failColor: '#ff0000'
+	config: PropTypes.object
 }
