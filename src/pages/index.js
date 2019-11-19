@@ -152,7 +152,6 @@ const reducer = (state = initialState, action = {}) => {
 			if (data.length >= BUFFER_LENGTH_points) 
 				data.shift();
 			const p = action.data / 100;
-			console.log(`[index.js] Updating receiver data point: ${p} dBm`);
 			data.push([ new Date(), p ]);
 
 			return {
@@ -301,7 +300,7 @@ const IndexPage = () => {
 					data={state.data}
 				/>
 
-				<Footer show={state.panel === PANELS.GAUGES} theme={state.settings.theme} />
+				<Footer show={state.panel !== PANELS.GAUGES} theme={state.settings.theme} />
 			</div>
 		</>
 	);
