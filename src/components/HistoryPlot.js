@@ -3,7 +3,7 @@ import PropTypes from 'prop-types';
 
 import { AreaChart } from 'react-chartkick';
 
-const HistoryPlot = ({ data, config }) => {
+const HistoryPlot = ({ data, settings }) => {
 
 	// bound the x-axis with most recent
 	// point (last point in data array)
@@ -18,7 +18,7 @@ const HistoryPlot = ({ data, config }) => {
 	const aboveData = [];
 	const belowData = [];
 
-	const threshold = config.threshold_dBm;
+	const threshold = settings.threshold_dBm;
 
 	// For each rx data point, create 3 data sets:
 	// one for threshold, one for rx data above
@@ -32,10 +32,10 @@ const HistoryPlot = ({ data, config }) => {
 		return [ point[0], threshold ];
 	});
 
-	const passColor = config.pass_color;
-	const failColor = config.fail_color;
+	const passColor = settings.pass_color;
+	const failColor = settings.fail_color;
 
-	const thresholdLineColor = config.darktheme ? config.threshold_line_light : config.threshold_line_dark;
+	const thresholdLineColor = settings.darktheme ? settings.threshold_line_light : settings.threshold_line_dark;
 
 	const thresholdSeries = { name: 'threshold', color: thresholdLineColor, points: false, data: thresholdData, dataset: { fill: false, spanGaps: true, borderWidth: 1 }};
 	const aboveSeries = { name: 'above', color: failColor, points: false, data: aboveData, dataset: { borderColor: 'rgba(0,0,0,0)', fill: '-1', lineTension: 0 } };

@@ -1,10 +1,12 @@
 import React from 'react';
+import PropTypes from 'prop-types';
 import { useStaticQuery, graphql } from 'gatsby';
+
 import Logo from './Logo';
 
-const Footer = ({ darktheme, panel }) => {
+const Footer = ({ show, theme }) => {
 
-	const data = useStaticQuery(
+	const siteInfo = useStaticQuery(
 		graphql`
 			query {
 				site {
@@ -17,18 +19,24 @@ const Footer = ({ darktheme, panel }) => {
 		`
 	);
 
+	if (!show) return null;
+	
 	return (
-		panel !== 'gauges' &&
-		<footer className={'theme-' + (darktheme ? 'dark' : 'light')}>
+		<footer className={'theme-' + theme}>
 			<p className='copyright'>
-				<a target='_blank' rel='noopener noreferrer' href={data.site.siteMetadata.ownerLink}>&copy;
-					{data.site.siteMetadata.owner}
+				<a target='_blank' rel='noopener noreferrer' href={siteInfo.site.siteMetadata.ownerLink}>&copy;
+					{siteInfo.site.siteMetadata.owner}
 				</a>
 			
-				<Logo className='logo' color='#28ac70' />
+				<Logo className='logo' color='#10069F' />
 			</p>
 		</footer>
 	);
 }
 
 export default Footer;
+
+Footer.propTypes = {
+	show: PropTypes.bool,
+	theme: PropTypes.string
+}

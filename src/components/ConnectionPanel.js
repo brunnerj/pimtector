@@ -1,16 +1,16 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 
-import Panel from './Panel';
+import Panel, { PANELS } from './Panel';
 import Spinner from './Spinner';
 import Showcase from '../images/showcase-01.png';
 import LeftWand from '../images/wand-left.png';
 import RightWand from '../images/wand-right.png';
 
-const ConnectionPanel = ({ panel, panelTimeout, onConnect, isConnecting }) => {
+const ConnectionPanel = ({ panel, panelTimeout, connect, isConnecting }) => {
 
 	return (
-		<Panel id='connection' hideTitle={true} panel={panel} panelTimeout={panelTimeout}>
+		<Panel id={PANELS.CONNECTION} hideTitle={true} panel={panel} panelTimeout={panelTimeout}>
 
 			<div className='cta'>
 				<div className='lead-in'>Introducing PIM<span>tector</span>&trade;</div>
@@ -23,7 +23,7 @@ const ConnectionPanel = ({ panel, panelTimeout, onConnect, isConnecting }) => {
 				</div>
 
 				<button className='icon fa-link'
-					onClick={() => onConnect()}
+					onClick={() => connect()}
 					title='Connect'>Connect
 				</button>
 
@@ -45,6 +45,6 @@ export default ConnectionPanel;
 ConnectionPanel.propTypes = {
 	panel: PropTypes.string.isRequired,
 	panelTimeout: PropTypes.bool.isRequired,
-	onConnect: PropTypes.func,
+	connect: PropTypes.func,
 	isConnecting: PropTypes.bool
 }

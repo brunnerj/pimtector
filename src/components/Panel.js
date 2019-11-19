@@ -1,6 +1,14 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 
+export const PANELS = {
+	CONNECTION: 'connection',
+	GAUGES: 'gauges',
+	TIPS: 'tips',
+	SETTINGS: 'settings',
+	ERROR: 'error'
+}
+
 const Panel = ({ id, hideTitle, panel, panelTimeout, children }) => {
 
 	return (

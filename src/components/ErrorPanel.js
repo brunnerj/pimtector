@@ -1,17 +1,19 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 
-import Panel from './Panel';
+import Panel, { PANELS } from './Panel';
 
-const ErrorPanel = ({ panel, panelTimeout, onError, error }) => {
+const ErrorPanel = ({ panel, panelTimeout, throwError, error }) => {
+
+	if (!error) return null;
 
 	return (
-		<Panel id='error' hideTitle={true} panel={panel} panelTimeout={panelTimeout}>
+		<Panel id={PANELS.ERROR} hideTitle={true} panel={panel} panelTimeout={panelTimeout}>
 
-			<p>{error}</p>
+			<p>{error.message}</p>
 
 			<button className='icon fa-check-circle'
-				onClick={() => onError('')}
+				onClick={() => throwError()}
 				title='Clear'>Clear
 			</button>
 
@@ -24,6 +26,6 @@ export default ErrorPanel;
 ErrorPanel.propTypes = {
 	panel: PropTypes.string.isRequired,
 	panelTimeout: PropTypes.bool.isRequired,
-	onError: PropTypes.func,
-	error: PropTypes.string
+	throwError: PropTypes.func,
+	error: PropTypes.object
 }

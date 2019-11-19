@@ -1,111 +1,70 @@
 import React, { useEffect, useReducer } from 'react';
 import { useStaticQuery, graphql } from 'gatsby';
 
-import Helmet from 'react-helmet';
+import { Helmet } from 'react-helmet-async';
 
+import { PANELS } from '../components/Panel';
 import Header from '../components/Header';
 import Main from '../components/Main';
 import Footer from '../components/Footer';
 
+import Receiver from '../components/Receiver';
+
 import 'chart.js';
 import '../assets/scss/main.scss';
 
-const CONNECT_DELAY_ms = 2000; // time until connected
+
 const BUFFER_LENGTH_ms = 60000; // how deep is rx buffer
 const LOOP_RATE_ms = 100; // Rx polling delay
 const BUFFER_LENGTH_points = BUFFER_LENGTH_ms / LOOP_RATE_ms;
 
-const MIN_POWER_dBm = -120; // min Rx range
-const MAX_POWER_dBm = -90; // max Rx range
-const NOISE_dB = 1.5;
 
+// Action Types
+const CONNECT = 'connect';
+const CONNECTED = 'connected';
+const DISCONNECT = 'disconnect';
+const PLAY = 'play';
+const PAUSE = 'pause';
+const BATTERY = 'battery';
+const RECEIVER = 'receiver';
+const CLEAR = 'clear';
+const ERROR = 'error';
+const PANEL = 'panel';
+const PANEL_TIMEOUT = 'panelTimeout';
+const CONFIGURE = 'configure';
 
-const fakeReceiver = (function() {
+// Action creators
+const connect = d => ({ type: CONNECT, data: d });
+const connected = () => ({ type: CONNECTED });
+const disconnect = () => ({ type: DISCONNECT });
+const panel = p => ({ type: PANEL, data: p });
+const timeout = () => ({ type: PANEL_TIMEOUT, data: true }); 
+const play = () => ({ type: PLAY });
+const pause = () => ({ type: PAUSE });
+const clear = () => ({ type: CLEAR });
+const battery = level => ({ type: BATTERY, data: level });
+const receiver = data => ({ type: RECEIVER, data: data });
+const throwError = e => ({ type: ERROR, data: e });
+const configure = settings => ({ type: CONFIGURE, data: settings });
 
-	let _dispatcher = null;
-	let _tid = null; // timer id
-	let _prev = null; // previous Rx value
+let dispatch = () => {};
 
-	function _rx() {
-		const d = new Date();
-		let min = MIN_POWER_dBm;
-		let max = MAX_POWER_dBm;
-
-		if (_prev) {
-			min = Math.max(MIN_POWER_dBm, _prev - NOISE_dB);
-			max = Math.min(MAX_POWER_dBm, _prev + NOISE_dB);
-		}
-
-		const newValue = Math.random() * (max - min) + min;
-
-		_prev = Math.max(Math.min(newValue, max), min);
-
-		return [ d, _prev ];
-	}
-
-	const _connect = (dispatcher) => {
-		if (_dispatcher) return; // already connected
-
-		_dispatcher = dispatcher;
-
-		setTimeout(() => { _dispatcher({ type: 'connected' }); }, CONNECT_DELAY_ms);
-	}
-
-	const _disconnect = () => {
-		if (!_dispatcher) return;
-		if (_tid) _pause();
-		_prev = null;
-		_dispatcher = null;
-	}
-
-	const _play = () => {
-		if (!_dispatcher) return; // fakeReceiver is not connected
-		if (_tid) {
-			clearTimeout(_tid);
-			_tid = null;
-		}
-		_tid = setTimeout(() => {
-			_dispatcher({ type: 'data', data: _rx() });
-
-			if (_tid) {
-				_play();
-			} else {
-				_pause();
-			}
-		}, LOOP_RATE_ms);
-	}
-
-	const _pause = () => {
-		if (!_dispatcher) return; // fakeReceiver is not connected
-
-		console.log('[IndexPage] PAUSING FakeReceiver!!!!');
-
-		clearTimeout(_tid);
-		_tid = null;
-		_prev = null;
-	}
-
-	return {
-		connect: _connect,
-		disconnect: _disconnect,
-		play: _play,
-		pause: _pause
-	}
-}());
-// window.fakeReceiver = fakeReceiver; // for console debugging
-
+// Application State
 const initialState = {
+	panel: PANELS.CONNECTION,
+	panelTimeout: true,
+
 	isConnected: false,
 	isConnecting: false,
 	isPlaying: false,
-	error: '',
-	panel: 'connection',
-	panelTimeout: true,
+
+	error: null,
+	battery: null,
 	data: [],
 
-	config: {
+	settings: {
 		sound: true,
-		darktheme: false,
+		theme: 'light',
 		showtips: true,
 		
 		threshold_dBm: -105,
@@ -120,78 +79,108 @@ const initialState = {
 	}
 };
 
-const reducer = (state, action) => {
+// Reducer - take action types and update
+// application state
+const reducer = (state = initialState, action = {}) => {
+
 	let panel = state.panel;
 	let panelTimeout = state.panelTimeout;
 
 	switch (action.type) {
-		case 'connect':
-			fakeReceiver.connect(action.data);
+		case CONNECT:
+			
+			dispatch = action.data;
+
+			Receiver.connect({
+				batteryFn: (level) => { dispatch(battery(level)); },
+				receiverFn: (data) => { dispatch(receiver(data)); }
+				})
+				.then(() => {
+					dispatch(connected());
+				})
+				.catch(e => {
+					dispatch(disconnect());
+					dispatch(throwError(e));
+				});
 			return {
 				...state,
 				isConnecting: true
-			};
-		case 'connected':
+			}
+		case CONNECTED:
 			return {
 				...state,
 				isConnecting: false,
 				isConnected: true,
-				panel: 'gauges',
+				panel: PANELS.GAUGES,
 				panelTimeout: true
 			}
-		case 'disconnect':
-			fakeReceiver.disconnect();
+		case DISCONNECT:
+
+			Receiver.disconnect().catch(e => {
+				dispatch(throwError(e));
+			});
+
 			return {
 				...state,
-				panel: 'connection',
+				panel: PANELS.CONNECTION,
 				panelTimeout: !state.isConnected,
 				isPlaying: false,
-				isConnected: false
+				isConnecting: false,
+				isConnected: false,
+				battery: null
 			};
-		case 'play':
-			fakeReceiver.play();
+		case PLAY:
+			Receiver.play().catch(e => dispatch(throwError(e)));
 			return {
 				...state,
 				isPlaying: true
 			};
-		case 'pause':
-			fakeReceiver.pause();
+		case PAUSE:
+			Receiver.pause().catch(e => dispatch(throwError(e)));
 			return {
 				...state,
 				isPlaying: false
 			};
-		case 'data':
+		case BATTERY:
+			console.log(`[index.js] Battery level updated to ${action.data}%`);
+			return {
+				...state,
+				battery: action.data
+			};
+		case RECEIVER:
 			const data = state.data;
 			if (data.length >= BUFFER_LENGTH_points) 
 				data.shift();
-			data.push(action.data);
+			const p = action.data / 100;
+			console.log(`[index.js] Updating receiver data point: ${p} dBm`);
+			data.push([ new Date(), p ]);
 
 			return {
 				...state,
 				data: data
 			};
-		case 'clear':
+		case CLEAR:
 			return {
 				...state,
 				data: []
 			};
-		case 'error':
-			const error = action.data;
+		case ERROR:
+			const e = action.data;
 
-			if (error === '' ) {
+			if (!e) {
 				// no errors - pick new panel
-				panel = state.isConnected ? 'gauges' : 'connection';
+				panel = state.isConnected ? PANELS.GAUGES : PANELS.CONNECTION;
 			} else {
-				panel = 'error';
+				panel = PANELS.ERROR;
 			}
 
 			return {
 				...state,
 				panelTimeout: false,
 				panel: panel,
-				error: error
+				error: e
 			};
-		case 'panel':
+		case PANEL:
 			panel = action.data;
 
 			if (state.panel !== panel) {
@@ -202,24 +191,26 @@ const reducer = (state, action) => {
 				panelTimeout: panelTimeout,
 				panel: panel
 			};
-		case 'panelTimeout':
+		case PANEL_TIMEOUT:
 			return {
 				...state,
 				panelTimeout: action.data
 			}
-		case 'config':
+		case CONFIGURE:
 			return {
 				...state,
-				config: action.data
+				settings: action.data
 			}
 		default:
 			return state;
 	}
 };
 
+
+
 const IndexPage = () => {
 
-	const data = useStaticQuery(
+	const siteInfo = useStaticQuery(
 		graphql`
 			query {
 				site {
@@ -236,21 +227,35 @@ const IndexPage = () => {
 	const [state, dispatch] = useReducer(reducer, initialState);
 
 	useEffect(() => {
-		setTimeout(() => { dispatch({ type: 'panelTimeout', data: true }) }, 350);
+		setTimeout(() => { dispatch(timeout()) }, 350);
 	}, [state.panelTimeout]);
+
+	const configureFn = settings => {
+		if (settings) {
+			dispatch(configure(settings));
+		} else {
+			if (state.panel === PANELS.SETTINGS) {
+				dispatch(panel(state.isConnected 
+					? PANELS.GAUGES 
+					: PANELS.CONNECTION));
+			} else {
+				dispatch(panel(PANELS.SETTINGS));
+			}
+		}
+	}
 
 	return (
 		<>
 			<Helmet
-				title={data.site.siteMetadata.title}
+				title={siteInfo.site.siteMetadata.title}
 				meta={[
 					{
 						name: 'description',
-						content: data.site.siteMetadata.description,
+						content: siteInfo.site.siteMetadata.description,
 					},
 					{
 						name: 'keywords',
-						content: data.site.siteMetadata.keywords,
+						content: siteInfo.site.siteMetadata.keywords,
 					},
 				]}>
 				<html lang="en" />
@@ -258,43 +263,45 @@ const IndexPage = () => {
 
 			<div className='wrapper'>
 				<Header 
-					darktheme={state.config.darktheme}
-
-					canPlay={state.isConnected && state.error === ''}
-					canConfigure={state.error === '' && !state.isConnecting}
-					onToggleConfigure={() => {
-						if (state.panel === 'settings')
-						{
-							dispatch({ type: 'panel', data: state.isConnected ? 'gauges' : 'connection' });
-						} else {
-							dispatch({ type: 'panel', data: 'settings' });
-						}
-					}}
-
+					isConnected={state.isConnected}
 					isPlaying={state.isPlaying}
+
+					play={() => dispatch(play())}
+					pause={() => dispatch(pause())}
+					canPlay={state.isConnected && !state.errors}
+
+					clear={() => dispatch(clear())}
 					canClear={state.data.length > 0}
-					onPlay={() => dispatch({ type: 'play' })}
-					onPause={() => dispatch({ type: 'pause' })}
-					onClear={() => dispatch({ type: 'clear' })}
+
+					configure={configureFn}
+					canConfigure={!state.errors && !state.isConnecting}
+
+					battery={state.battery}
+
+					settings={state.settings}
 				/>
 
 				<Main
-					darktheme={state.config.darktheme}
 					panel={state.panel}
 					panelTimeout={state.panelTimeout}
-					onConnect={() => dispatch({ type: 'connect', data: dispatch })}
-					onDisconnect={() => dispatch({ type: 'disconnect' })}
+
+					connect={() => dispatch(connect(dispatch))}
+					disconnect={() => dispatch(disconnect())}
 					isConnecting={state.isConnecting}
 					isConnected={state.isConnected}
+					
 					isPlaying={state.isPlaying}
-					data={state.data}
-					onError={(err) => dispatch({ type: 'error', data: err })}
+
+					throwError={e => dispatch(throwError(e))}
 					error={state.error}
-					config={state.config}
-					setConfig={(config) => dispatch({ type: 'config', data: config })}
+
+					settings={state.settings}
+					configure={configureFn}
+
+					data={state.data}
 				/>
 
-				<Footer darktheme={state.config.darktheme} panel={state.panel} />
+				<Footer show={state.panel === PANELS.GAUGES} theme={state.settings.theme} />
 			</div>
 		</>
 	);

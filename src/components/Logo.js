@@ -1,7 +1,7 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 
-const Logo = ({ className, css, color }) => (
+const Logo = ({ className, color }) => (
 	<svg viewBox="0 0 480 480" className={className}>
 		<path
 			fill={color}
@@ -19,7 +19,6 @@ const Logo = ({ className, css, color }) => (
 
 Logo.propTypes = {
 	className: PropTypes.string,
-	css: PropTypes.object,
 	color: PropTypes.string,
 };
 

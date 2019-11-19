@@ -1,17 +1,17 @@
-
 import React from 'react';
 import PropTypes from 'prop-types';
-import Panel from '../components/Panel';
 
-const Tips = ({ panel, panelTimeout, config, setConfig }) => {
+import Panel, { PANELS } from '../components/Panel';
 
-	if (panel !== 'gauges' || !config.showtips) return null;
+const Tips = ({ panel, panelTimeout, settings, configure }) => {
+
+	if (panel !== PANELS.GAUGES || !settings.showtips) return null;
 
 	return (
 
-		<Panel id='tips' hideTitle={true} panel='tips' panelTimeout={panelTimeout}>
+		<Panel id={PANELS.TIPS} hideTitle={true} panel='tips' panelTimeout={panelTimeout}>
 			<button className='icon fa-check-circle'
-				onClick={() => { setConfig({ ...config, showtips: false })}}
+				onClick={() => { configure({ ...settings, showtips: false })}}
 				title='Ok'>Ok, got it!
 			</button>
 
@@ -42,6 +42,6 @@ export default Tips;
 
 Tips.propTypes = {
 	panel: PropTypes.string,
-	config: PropTypes.object,
-	setConfig: PropTypes.func
+	settings: PropTypes.object,
+	configure: PropTypes.func
 }

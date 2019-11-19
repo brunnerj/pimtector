@@ -29,7 +29,7 @@ module.exports = {
 			},
 		},
 		'gatsby-plugin-sass',
-		'gatsby-plugin-react-helmet',
+		'gatsby-plugin-react-helmet-async',
 		{
 			resolve: 'gatsby-plugin-s3',
 			options: {

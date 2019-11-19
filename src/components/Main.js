@@ -9,41 +9,37 @@ import TipsPanel from '../components/TipsPanel';
 
 
 const Main = ({ 
-	darktheme, 
 	panel, 
 	panelTimeout, 
-	onConnect, 
+	connect, 
+	disconnect, 
 	isConnecting, 
 	isConnected, 
 	isPlaying, 
-	onError, 
+	throwError, 
 	error, 
-	config, 
-	setConfig, 
-	onDisconnect, 
+	settings, 
+	configure, 
 	data }) => {
 
-	const cls = 'main theme-' + (darktheme ? 'dark' : 'light');
-
 	return (
-		<div className={cls}>
+		<div className={'main theme-' + settings.theme}>
 
 			<ConnectionPanel panel={panel} panelTimeout={panelTimeout}
-				onConnect={onConnect} isConnecting={isConnecting} />
+				connect={connect} isConnecting={isConnecting} />
 
 			<MeasurementPanel isPlaying={isPlaying} panel={panel} panelTimeout={panelTimeout} 
-				data={data} config={config} setConfig={setConfig} />
+				data={data} settings={settings} configure={configure} />
 
 			<TipsPanel panel={panel} panelTimeout={panelTimeout}
-				config={config} 
-				setConfig={setConfig} />
+				settings={settings} configure={configure} />
 
 			<ConfigPanel panel={panel} panelTimeout={panelTimeout}
-				config={config} setConfig={setConfig} onError={onError}
-				isConnected={isConnected} onDisconnect={onDisconnect} />
+				settings={settings} configure={configure} throwError={throwError}
+				isConnected={isConnected} disconnect={disconnect} />
 
 			<ErrorPanel panel={panel} panelTimeout={panelTimeout}
-				onError={onError} error={error} />
+				throwError={throwError} error={error} />
 
 		</div>
 	)
@@ -52,16 +48,16 @@ const Main = ({
 Main.propTypes = {
 	panel: PropTypes.string,
 	panelTimeout: PropTypes.bool,
-	onConnect: PropTypes.func,
-	onDisconnect: PropTypes.func,
+	connect: PropTypes.func,
+	disconnect: PropTypes.func,
 	isConnecting: PropTypes.bool,
+	isConnected: PropTypes.bool,
 	isPlaying: PropTypes.bool,
-	onError: PropTypes.func,
-	error: PropTypes.string,
-	config: PropTypes.object,
-	setConfig: PropTypes.func,
-	data: PropTypes.array,
-	threshold_dBm: PropTypes.number
+	throwError: PropTypes.func,
+	error: PropTypes.object,
+	settings: PropTypes.object,
+	configure: PropTypes.func,
+	data: PropTypes.array
 };
 
 
