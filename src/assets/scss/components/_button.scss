@@ -14,9 +14,8 @@ button,
 	color: _palette(theme-light-bg); /* buttons have dark bg */
 	cursor: pointer;
 	display: inline-block;
-	font-size: 0.8rem;
+	font-size: 1rem;
 	font-weight: _font(weight);
-	height: _size(element-height);
 	letter-spacing: _font(letter-spacing);
 	line-height: _size(element-height);
 	outline: 0;

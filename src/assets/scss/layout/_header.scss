@@ -12,11 +12,13 @@ header {
 	box-shadow: 0 0 3px 0 _palette(theme-light-fg);
 
 	nav {
+		display: flex;
+		flex-direction: row;
 
 		button {
 			@include vendor('box-shadow', none);
 			border-radius: 0;
-			font-size: 1.2rem;
+			font-size: 2.2rem;
 
 			&.icon:before {
 				margin-right: 0;
@@ -25,7 +27,7 @@ header {
 	}
 
 	.branding {
-		text-transform: uppercase;
+		font-size: 2.2rem;
 		font-weight: 600;
 		span {
 			font-size: 80%;

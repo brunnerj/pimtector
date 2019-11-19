@@ -96,6 +96,7 @@
 		}
 
 		.lead-in {
+			font-size: 1.5rem;
 			margin-top: 9rem;
 			margin-bottom: 2.75rem;
 			text-transform: uppercase;
@@ -118,7 +119,7 @@
 		.sub-tag {
 			margin-top: 0.5rem;
 			margin-bottom: 3.5rem;
-			font-size: 1.4rem;
+			font-size: 1.5rem;
 			color: _palette(theme-neutral);
 		}
 
@@ -442,6 +443,7 @@
 		left: 0;
 		right: 0;
 		bottom: 0;
+		font-size: 2em;
 		color: _palette(theme-dark-bg);
 		background-color: _palette(theme-light-overlay);
 		&.active {
@@ -451,12 +453,12 @@
 		&:before {
 			content: '';
 			border: 5px solid _palette(theme-color-overlay);
-			border-radius: 30px;
+			border-radius: 50px;
 			position: relative;
 			left: 50%;
 			margin-left: -15px;
-			width: 30px;
-			height: 30px;
+			width: 50px;
+			height: 50px;
 			opacity: 0;
 			
 			animation: pulsate 1s ease-out;
