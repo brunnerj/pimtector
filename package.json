@@ -18,14 +18,14 @@
     "gatsby": "^2.17.11",
     "gatsby-plugin-canonical-urls": "^2.1.14",
     "gatsby-plugin-manifest": "^2.2.27",
-    "gatsby-plugin-react-helmet": "^3.1.14",
+    "gatsby-plugin-react-helmet-async": "^1.0.9",
     "gatsby-plugin-s3": "^0.2.5",
     "gatsby-plugin-sass": "^2.1.21",
     "node-sass": "^4.13.0",
     "react": "^16.11.0",
     "react-chartkick": "^0.3.3",
     "react-dom": "^16.11.0",
-    "react-helmet": "^5.2.1",
+    "react-helmet-async": "^1.0.4",
     "react-rangeslider": "^2.2.0"
   },
   "devDependencies": {
