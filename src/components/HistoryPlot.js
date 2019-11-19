@@ -35,7 +35,9 @@ const HistoryPlot = ({ data, settings }) => {
 	const passColor = settings.pass_color;
 	const failColor = settings.fail_color;
 
-	const thresholdLineColor = settings.darktheme ? settings.threshold_line_light : settings.threshold_line_dark;
+	const thresholdLineColor = settings.theme !== 'light' 
+		? settings.threshold_line_light 
+		: settings.threshold_line_dark;
 
 	const thresholdSeries = { name: 'threshold', color: thresholdLineColor, points: false, data: thresholdData, dataset: { fill: false, spanGaps: true, borderWidth: 1 }};
 	const aboveSeries = { name: 'above', color: failColor, points: false, data: aboveData, dataset: { borderColor: 'rgba(0,0,0,0)', fill: '-1', lineTension: 0 } };
@@ -74,9 +76,9 @@ const HistoryPlot = ({ data, settings }) => {
 							display: false
 						},
 						ticks: {
-							min: -130,
-							max: -80,
-							maxTicksLimit: 2
+							min: settings.min_power_dBm,
+							max: settings.max_power_dBm,
+							maxTicksLimit: 3
 						}
 					}]
 				}
