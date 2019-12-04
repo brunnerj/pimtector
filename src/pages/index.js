@@ -10,7 +10,6 @@ import Footer from '../components/Footer';
 
 import Receiver from '../components/Receiver';
 
-import 'chart.js';
 import '../assets/scss/main.scss';
 
 // Action Types

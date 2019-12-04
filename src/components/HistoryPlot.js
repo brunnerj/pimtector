@@ -39,7 +39,6 @@ const HistoryPlot = ({ reset, peak_dBm, settings }) => {
 		now = buffer[buffer.length - 1][0];
 	}
 
-
 	const failedData = [];
 	const passedData = [];
 
