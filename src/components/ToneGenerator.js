@@ -36,13 +36,9 @@ const setFrequency = (value, threshold, max) => {
 }
 
 
-const ToneGenerator = ({ isPlaying, data, settings }) => {
+const ToneGenerator = ({ isPlaying, peak_dBm, settings }) => {
 
-	// value from data is interpreted as the peak value corresponding
-	// to a tonal frequency (if the value is above a threshold).
-	const value = (data && data.length && data.slice(-1)[0][1]) || null;
-
-	if (isPlaying && settings.sound && value && value >= settings.threshold_dBm) {
+	if (isPlaying && settings.sound && peak_dBm && peak_dBm >= settings.threshold_dBm) {
 
 		// create a new AudioContext if necessary
 		if (!_ctx) {
@@ -57,7 +53,7 @@ const ToneGenerator = ({ isPlaying, data, settings }) => {
 			_osc.start(); // start the oscillator
 		}
 
-		_osc.frequency.value = setFrequency(value, settings.threshold_dBm, settings.max_power_dBm);
+		_osc.frequency.value = setFrequency(peak_dBm, settings.threshold_dBm, settings.max_power_dBm);
 		_g.gain.exponentialRampToValueAtTime(VOLUME, _ctx.currentTime + BEEP_TIME_s);
 
 	} else {
@@ -88,6 +84,6 @@ export default ToneGenerator;
 
 ToneGenerator.propTypes = {
 	isPlaying: PropTypes.bool,
-	data: PropTypes.array,
+	peak_dBm: PropTypes.number,
 	settings: PropTypes.object
 }
