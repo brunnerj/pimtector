@@ -13,12 +13,6 @@ import Receiver from '../components/Receiver';
 import 'chart.js';
 import '../assets/scss/main.scss';
 
-
-const BUFFER_LENGTH_ms = 60000; // how deep is rx buffer
-const LOOP_RATE_ms = 100; // Rx polling delay
-const BUFFER_LENGTH_points = BUFFER_LENGTH_ms / LOOP_RATE_ms;
-
-
 // Action Types
 const CONNECT = 'connect';
 const CONNECTED = 'connected';
@@ -43,7 +37,7 @@ const play = () => ({ type: PLAY });
 const pause = () => ({ type: PAUSE });
 const clear = () => ({ type: CLEAR });
 const battery = level => ({ type: BATTERY, data: level });
-const receiver = data => ({ type: RECEIVER, data: data });
+const receiver = traces => ({ type: RECEIVER, data: traces });
 const throwError = e => ({ type: ERROR, data: e });
 const configure = settings => ({ type: CONFIGURE, data: settings });
 
@@ -60,7 +54,7 @@ const initialState = {
 
 	error: null,
 	battery: null,
-	data: [],
+	traces: [],
 
 	settings: {
 		sound: true,
@@ -70,12 +64,12 @@ const initialState = {
 		threshold_dBm: -105,
 		min_power_dBm: -130,
 		max_power_dBm: -80,
+		historyLength_ms: 20000,
 
 		pass_color: '#28ac70', // theme-color in _vars.scss
 		fail_color: '#ff0000', // error-color in _vars.scss
 		threshold_line_dark: '#1b1f22', // theme-light-fg
 		threshold_line_light: '#ffffff' // theme-dark-fg
-
 	}
 };
 
@@ -93,7 +87,9 @@ const reducer = (state = initialState, action = {}) => {
 
 			Receiver.connect({
 				batteryFn: (level) => { dispatch(battery(level)); },
-				receiverFn: (data) => { dispatch(receiver(data)); }
+				receiverFn: (traces) => { 
+					dispatch(receiver(traces)); 
+				}
 				})
 				.then(() => {
 					dispatch(connected());
@@ -142,26 +138,19 @@ const reducer = (state = initialState, action = {}) => {
 				isPlaying: false
 			};
 		case BATTERY:
-			console.log(`[index.js] Battery level updated to ${action.data}%`);
 			return {
 				...state,
 				battery: action.data
 			};
 		case RECEIVER:
-			const data = state.data;
-			if (data.length >= BUFFER_LENGTH_points) 
-				data.shift();
-			const p = action.data / 100;
-			data.push([ new Date(), p ]);
-
 			return {
 				...state,
-				data: data
+				traces: action.data
 			};
 		case CLEAR:
 			return {
 				...state,
-				data: []
+				traces: []
 			};
 		case ERROR:
 			const e = action.data;
@@ -204,8 +193,6 @@ const reducer = (state = initialState, action = {}) => {
 			return state;
 	}
 };
-
-
 
 const IndexPage = () => {
 
@@ -270,7 +257,7 @@ const IndexPage = () => {
 					canPlay={state.isConnected && !state.errors}
 
 					clear={() => dispatch(clear())}
-					canClear={state.data.length > 0}
+					canClear={state.traces.length > 0}
 
 					configure={configureFn}
 					canConfigure={!state.errors && !state.isConnecting}
@@ -297,7 +284,7 @@ const IndexPage = () => {
 					settings={state.settings}
 					configure={configureFn}
 
-					data={state.data}
+					traces={state.traces}
 				/>
 
 				<Footer show={state.panel !== PANELS.GAUGES} theme={state.settings.theme} />
