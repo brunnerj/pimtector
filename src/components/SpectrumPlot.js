@@ -3,7 +3,7 @@ import PropTypes from 'prop-types';
 
 import { LineChart } from 'react-chartkick';
 
-const SpectrumPlot = ({ data, settings }) => {
+const SpectrumPlot = ({ traces, settings }) => {
 
 	return (
 		<LineChart 
@@ -22,6 +22,6 @@ const SpectrumPlot = ({ data, settings }) => {
 export default SpectrumPlot;
 
 SpectrumPlot.propTypes = {
-	data: PropTypes.array,
+	traces: PropTypes.array,
 	settings: PropTypes.object
 }
