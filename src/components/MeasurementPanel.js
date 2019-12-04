@@ -25,22 +25,29 @@ const ThresholdSlider = ({ value, unit, setValue, min, max }) => {
 }
 
 
-const MeasurementPanel = ({ isPlaying, panel, panelTimeout, data, settings, configure }) => {
+const MeasurementPanel = ({ isPlaying, panel, panelTimeout, traces, settings, configure }) => {
 
 	const handleChangeThreshold = threshold => { configure({ ...settings, threshold_dBm: threshold })}
+
+	let max_power_dBm = Number.NEGATIVE_INFINITY;
+	if (traces && traces[0] && traces[0].data && traces[0].data.length > 0) {
+		traces[0].data.forEach(p => {
+			max_power_dBm = Math.max(max_power_dBm, p[1]);
+		});
+	}
 
 	return (
 		<Panel id={PANELS.GAUGES} hideTitle={true} panel={panel} panelTimeout={panelTimeout}>
 
-			<ToneGenerator isPlaying={isPlaying} data={data} settings={settings} />
+			<ToneGenerator isPlaying={isPlaying} peak_dBm={max_power_dBm} settings={settings} />
 
-			<SpectrumPlot data={data} settings={settings} />
+			<SpectrumPlot traces={traces} settings={settings} />
 
 			<ThresholdSlider value={settings.threshold_dBm}
 				setValue={handleChangeThreshold} unit='dBm'
 				min={settings.min_power_dBm} max={settings.max_power_dBm} />
 
-			<HistoryPlot data={data} settings={settings} />
+			<HistoryPlot reset={traces.length === 0} peak_dBm={max_power_dBm} settings={settings} />
 
 		</Panel>
 	);
@@ -52,7 +59,7 @@ MeasurementPanel.propTypes = {
 	isPlaying: PropTypes.bool,
 	panel: PropTypes.string.isRequired,
 	panelTimeout: PropTypes.bool.isRequired,
-	data: PropTypes.array,
+	traces: PropTypes.array,
 	settings: PropTypes.object,
 	configure: PropTypes.func
 }
