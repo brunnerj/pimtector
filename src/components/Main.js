@@ -20,7 +20,7 @@ const Main = ({
 	error, 
 	settings, 
 	configure, 
-	data }) => {
+	traces }) => {
 
 	return (
 		<div className={'main theme-' + settings.theme}>
@@ -29,7 +29,7 @@ const Main = ({
 				connect={connect} isConnecting={isConnecting} />
 
 			<MeasurementPanel isPlaying={isPlaying} panel={panel} panelTimeout={panelTimeout} 
-				data={data} settings={settings} configure={configure} />
+				traces={traces} settings={settings} configure={configure} />
 
 			<TipsPanel panel={panel} panelTimeout={panelTimeout}
 				settings={settings} configure={configure} />
@@ -57,7 +57,7 @@ Main.propTypes = {
 	error: PropTypes.object,
 	settings: PropTypes.object,
 	configure: PropTypes.func,
-	data: PropTypes.array
+	traces: PropTypes.array
 };
 
 
