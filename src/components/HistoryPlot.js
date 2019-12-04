@@ -1,37 +1,57 @@
-import React from 'react';
+import React, { useRef, useEffect } from 'react';
 import PropTypes from 'prop-types';
 
-import { AreaChart } from 'react-chartkick';
+import $ from 'jquery';
+window.jQuery = $;
+window.$ = $;
+require('flot');
 
-const HistoryPlot = ({ data, settings }) => {
+function usePrevious(value) {
+	const ref = useRef();
+	useEffect(() => {
+		ref.current = value;
+	});
+	return ref.current;
+}
 
-	// bound the x-axis with most recent
-	// point (last point in data array)
-	// and minimum time of data buffer.
-	let tmin, tmax;
+const HistoryPlot = ({ reset, peak_dBm, settings }) => {
 
-	if (data && data.length > 0) {
-		tmax = data.slice(-1)[0][0]; // latest point time value
-		tmin = (new Date(tmax.getTime() - 60000)); // 60 seconds past
+	const plotRef = useRef(); // plot container DOM reference
+	const histRef = useRef([]); // history buffer
+
+	const prevPeak = usePrevious(peak_dBm);
+	const newPeak = prevPeak !== peak_dBm;
+	
+	let now;
+	let buffer;
+
+	if (reset || newPeak) {
+		now = Date.now();
+
+		// filter history of any points older than historyLength_ms
+		buffer = reset ? [] : histRef.current.filter(p => p[0] > now - settings.historyLength_ms);
+		buffer.push([ now, peak_dBm ]);
+
+	} else {
+
+		// use history buffer as is and pull now from the newest (i.e., the last) buffer point
+		buffer = histRef.current;
+		now = buffer[buffer.length - 1][0];
 	}
 
-	const aboveData = [];
-	const belowData = [];
+
+	const failedData = [];
+	const passedData = [];
 
 	const threshold = settings.threshold_dBm;
 
-	// For each rx data point, create 3 data sets:
-	// one for threshold, one for rx data above
-	// the threshold, and one for data below the
-	// threshold.
-	const thresholdData = data.map((point) => {
+	const thresholdData = buffer.map(p => {
 
-		aboveData.push([ point[0], Math.max(threshold, point[1] )]);
-		belowData.push([ point[0], Math.min(threshold, point[1] )]);
+		failedData.push([ p[0] - now, Math.max(threshold, p[1] ), threshold]);
+		passedData.push([ p[0] - now, Math.min(threshold, p[1] ), Number.NEGATIVE_INFINITY]);
 
-		return [ point[0], threshold ];
+		return [ p[0] - now, threshold ];
 	});
-
 	const passColor = settings.pass_color;
 	const failColor = settings.fail_color;
 
@@ -39,57 +59,59 @@ const HistoryPlot = ({ data, settings }) => {
 		? settings.threshold_line_light 
 		: settings.threshold_line_dark;
 
-	const thresholdSeries = { name: 'threshold', color: thresholdLineColor, points: false, data: thresholdData, dataset: { fill: false, spanGaps: true, borderWidth: 1 }};
-	const aboveSeries = { name: 'above', color: failColor, points: false, data: aboveData, dataset: { borderColor: 'rgba(0,0,0,0)', fill: '-1', lineTension: 0 } };
-	const belowSeries = { name: 'below', color: passColor, points: false, data: belowData, dataset: { borderColor: 'rgba(0,0,0,0)', fill: 'bottom', lineTension: 0 } };
+	const thresholdSeries = { label: 'threshold', color: thresholdLineColor, data: thresholdData, lines: { lineWidth: 2 } };
+	const failedSeries = { label: 'above', color: failColor, data: failedData, lines: { fill: true, lineWidth: 2 } };
+	const passedSeries = { label: 'below', color: passColor, data: passedData, lines: { fill: true, lineWidth: 2 } };
+
+	const traces = [ failedSeries, passedSeries, thresholdSeries ];
+
+	const options = {
+		series: {
+			shadowSize: 0
+		},
+		grid: {
+			margin: { top: 0, right: 5, bottom: 0, left: 0 },
+			tickColor: "rgba(0,0,0,0)",
+			borderWidth: 0
+		},
+		xaxis: {
+			show: false,
+			autoScale: 'none',
+			min: -settings.historyLength_ms,
+			max: 0,
+			tickDecimals: 0,
+			ticks: [ -settings.historyLength_ms, 0 ],
+			tickLength: 0
+		},
+		yaxis: {
+			position: 'right',
+			labelWidth: 40,
+			autoScale: 'none',
+			min:  settings.min_power_dBm,
+			max: settings.max_power_dBm,
+			tickDecimals: 0,
+			ticks: [ settings.min_power_dBm, threshold, settings.max_power_dBm ],
+			tickLength: 0
+		}
+	}
+
+	useEffect(() => {
+		// save the history buffer
+		histRef.current = buffer;
+
+		$.plot($(plotRef.current), traces, options);
+
+	},[ peak_dBm, buffer, traces, options ]);
 
 	return (
-		<AreaChart 
-			id='history-1'
-			height='25%'
-			data={[ thresholdSeries, aboveSeries, belowSeries ]}
-			library={{ 
-				maintainAspectRatio: false,
-				legend: false, 
-				scales: {
-					xAxes: [{
-						type: 'time',
-						position: 'bottom',
-						time: {
-							tooltipFormat: 'h:mm:ss a'
-						},
-						ticks: {
-							display: false,
-							min: tmin,
-							max: tmax
-						},
-						gridLines: {
-							display: false,
-							drawTicks: false,
-							drawBorder: false
-						}
-					}],
-					yAxes: [{
-						type: 'linear',
-						position: 'right',
-						gridLines: {
-							display: false
-						},
-						ticks: {
-							min: settings.min_power_dBm,
-							max: settings.max_power_dBm,
-							maxTicksLimit: 3
-						}
-					}]
-				}
-			}}
-		/>
+		<div id='history-1' ref={plotRef} />
 	);
 };
 
 export default HistoryPlot;
 
 HistoryPlot.propTypes = {
-	data: PropTypes.array,
+	reset: PropTypes.bool,
+	peak_dBm: PropTypes.number,
 	config: PropTypes.object
 }
