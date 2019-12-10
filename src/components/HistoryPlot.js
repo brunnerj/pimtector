@@ -70,7 +70,7 @@ const HistoryPlot = ({ reset, peak_dBm, settings }) => {
 		},
 		grid: {
 			margin: { top: 0, right: 5, bottom: 0, left: 0 },
-			tickColor: "rgba(0,0,0,0)",
+			tickColor: 'rgba(0,0,0,0)',
 			borderWidth: 0
 		},
 		xaxis: {
@@ -84,9 +84,9 @@ const HistoryPlot = ({ reset, peak_dBm, settings }) => {
 		},
 		yaxis: {
 			position: 'right',
-			labelWidth: 40,
+			labelWidth: 60,
 			autoScale: 'none',
-			min:  settings.min_power_dBm,
+			min: settings.min_power_dBm,
 			max: settings.max_power_dBm,
 			tickDecimals: 0,
 			ticks: [ settings.min_power_dBm, threshold, settings.max_power_dBm ],

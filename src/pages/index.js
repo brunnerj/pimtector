@@ -65,6 +65,9 @@ const initialState = {
 		max_power_dBm: -80,
 		historyLength_ms: 20000,
 
+		spectrum_traces: 16,
+		spectrum_trace_color: { R: 242, G: 194, B: 79 }, // 242, 194, 79
+
 		pass_color: '#28ac70', // theme-color in _vars.scss
 		fail_color: '#ff0000', // error-color in _vars.scss
 		threshold_line_dark: '#1b1f22', // theme-light-fg

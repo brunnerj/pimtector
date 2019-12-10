@@ -75,7 +75,7 @@ const ToneGenerator = ({ isPlaying, peak_dBm, settings }) => {
 	}
 
 	return (
-		<div style={{ display: 'none' }}></div>
+		<div id='tonegen-1' style={{ display: 'none' }}></div>
 	);
 }
 

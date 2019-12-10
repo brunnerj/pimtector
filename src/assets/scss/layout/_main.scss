@@ -14,11 +14,6 @@
 	color: _palette(theme-light-fg);
 	background-color: _palette(theme-light-bg);
 
-	&.theme-dark {
-		color: _palette(theme-dark-fg);
-		background-color: _palette(theme-dark-bg);
-	}
-
 	.panel {
 		@include vendor('display', 'flex');
 		@include vendor('flex-direction', 'column');
@@ -153,27 +148,28 @@
 	}
 
 	#gauges {
-		@include vendor('justify-content', 'space-between');
+		@include vendor('flex-direction', 'row');
+		@include vendor('align-items', 'flex-start');
 
-		#gauge-1 {
-			position: absolute;
-			max-height: 500px;
-			height: 100% !important;
-			line-height: 100% !important;
+		.slider {
+			width: 10%;
+			background: #e6e6e6;
 		}
 
-		#slider-1 {
-			width: 40%;
-			max-width: 350px;
-			min-width: 250px;
-			margin-top: -4rem;
-		}
+		#gauges-charts {
+			@include vendor('flex-direction', 'column');
+			width: 90%;
+			height: 100%;
 
-		#history-1 {
-			position: relative;
-			width: 100%;
-			height: 25%;
-			max-height: 200px;
+			#spectrum-1 {
+				position: relative;
+				height: 75%;
+			}
+
+			#history-1 {
+				position: relative;
+				height: 25%;
+			}
 		}
 	}
 
@@ -407,33 +403,6 @@
 		justify-content: space-between;
 	}
 
-	.slider {
-		.rangeslider {
-			background-color: _palette(error-color);
-			border-radius: 0;
-			box-shadow: none;
-			.rangeslider__fill {
-				background-color: _palette(theme-color);
-				border-radius: 0;
-				box-shadow: none;
-			}
-			.rangeslider__handle {
-				box-shadow: none;
-				&:after {
-					display: none;
-				}
-			}
-		}
-		.value {
-			font-family: inherit;
-			color: _palette(theme-light-fg);
-			text-align: center;
-			.v {
-				font-size: 1.5rem;
-			}
-		}
-	}
-
 	.spinner {
 		display: none;
 		flex-direction: column;
@@ -468,18 +437,35 @@
 	}
 
 	&.theme-dark {
+
+		color: _palette(theme-dark-fg);
+		background-color: _palette(theme-dark-bg);
+
 		.spinner {
 			color: _palette(theme-dark-fg);
 			background-color: _palette(theme-dark-overlay);
 		}
 
-		.slider .value {
-			color: _palette(theme-dark-fg);
-		}
-
 		.readout .value,
 		.readout .unit {
 			color: _palette(theme-light-fg);
+		}
+
+		.flot-svg text {
+			fill: #fff;
+		}
+
+		#gauges .slider {
+			background-color: #787878;
+
+			.slider__label {
+				color: #fff;
+				background-color: #000;
+
+				&::after {
+					background-color: #000;
+				}
+			}
 		}
 	}
 

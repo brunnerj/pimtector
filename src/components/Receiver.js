@@ -89,7 +89,7 @@ function plotData() {
 		// array of [ x, y ] points to plot
 		const trace = y_values.map((v, i) => {
 
-			const freq = Fo_Hz + (i * (Fs_Hz / (N - 1)) - Fs_Hz / 2); // frequency in MHz
+			const freq = Fo_Hz + (i * (Fs_Hz / (N - 1)) - Fs_Hz / 2); // frequency in Hz
 			const power = (v * scale) - 130; // dBm
 
 			return [ freq / 1e6, power ];
