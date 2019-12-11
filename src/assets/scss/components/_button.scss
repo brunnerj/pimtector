@@ -71,8 +71,3 @@ input[type="button"],
 button {
 	line-height: calc(#{_size(element-height)} - 2px);
 }
-
-.theme-dark button {
-	color: _palette(theme-dark-bg); 
-	background-color: _palette(switch-on-bg) !important;
-}

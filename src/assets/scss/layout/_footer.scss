@@ -24,19 +24,17 @@ footer {
 		position: absolute;
 		top: 0;
 		width: 30px;
+
+		#bulb {
+			fill: _palette(theme-light-color);
+		}
+		#outline {
+			stroke: _palette(theme-light-color);
+		}
 	}
 
 	a {
 		border-color: _palette(theme-light-fg);
-	}
-
-	&.theme-dark {
-		color: _palette(theme-dark-fg);
-		background-color: _palette(theme-dark-bg);
-
-		a {
-			border-color: _palette(theme-dark-fg);
-		}
 	}
 
 	.body.is-article-visible & {
@@ -47,5 +45,24 @@ footer {
 
 	.body.is-loading & {
 		opacity: 0;
+	}
+
+
+	&.theme-dark {
+		color: _palette(theme-dark-fg);
+		background-color: _palette(theme-dark-bg);
+
+		a {
+			border-color: _palette(theme-dark-fg);
+		}
+
+		.logo {
+			#bulb {
+				fill: _palette(theme-dark-color);
+			}
+			#outline {
+				stroke: _palette(theme-dark-color);
+			}
+		}
 	}
 }

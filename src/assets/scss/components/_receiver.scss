@@ -1,0 +1,23 @@
+/**
+ Receiver Control Panel
+ */
+.receiver {
+	width: 100%;
+
+	.row {
+		@include vendor('display', 'flex');
+		@include vendor('flex-direction', 'row');
+		@include vendor('justify-content', 'space-between');
+	}
+
+	.label {
+		font-size: 80%;
+		text-transform: uppercase;
+		vertical-align: top;
+	}
+	.value {
+		margin: 0 0.4em;
+		font-size: 120%;
+		font-weight: bold;
+	}
+}

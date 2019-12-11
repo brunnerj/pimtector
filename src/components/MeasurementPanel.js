@@ -7,7 +7,7 @@ import Slider from './Slider';
 
 import ToneGenerator from './ToneGenerator';
 import SpectrumPlot from './SpectrumPlot';
-
+import ReceiverControl from './ReceiverControl';
 import HistoryPlot from './HistoryPlot';
 
 const MeasurementPanel = ({ isPlaying, panel, panelTimeout, traces, settings, configure }) => {
@@ -15,10 +15,18 @@ const MeasurementPanel = ({ isPlaying, panel, panelTimeout, traces, settings, co
 	const handleChangeThreshold = threshold => { configure({ ...settings, threshold_dBm: threshold })}
 
 	let max_power_dBm = Number.NEGATIVE_INFINITY;
+	let Fstart = 0;
+	let Fstop = 0;
+	let RBW = 0;
 	if (traces && traces[0] && traces[0].data && traces[0].data.length > 0) {
+
+		Fstart = traces[0].data[0][0];
+		Fstop = traces[0].data[traces[0].data.length - 1][0];
 		traces[0].data.forEach(p => {
 			max_power_dBm = Math.max(max_power_dBm, p[1]);
 		});
+
+		RBW = (Fstop - Fstart) / (traces[0].data.length - 1);
 	}
 
 	return (
@@ -31,7 +39,10 @@ const MeasurementPanel = ({ isPlaying, panel, panelTimeout, traces, settings, co
 				setValue={handleChangeThreshold} />
 
 			<div id='gauges-charts'>
+
 				<SpectrumPlot traces={traces} settings={settings} />
+
+				<ReceiverControl Fstart_MHz={Fstart} Fstop_MHz={Fstop} RBW_kHz={RBW * 1000} settings={settings} />
 
 				<HistoryPlot reset={traces.length === 0} peak_dBm={max_power_dBm} settings={settings} />
 

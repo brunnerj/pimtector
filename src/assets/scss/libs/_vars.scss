@@ -30,10 +30,12 @@
 	);
 
 // Palette.
+	$base-color:					#0A0695; // rgb: 10,6,159
+
 	$palette: (
 		bg:							#1b1f22,
 		bg-alt:						#000000,
-		bg-overlay:					rgba(19,21,25,0.5),
+		bg-overlay:					rgba(19, 21, 25, 0.5),
 		fg:							#ffffff,
 		fg-bold:					#ffffff,
 		fg-light:					rgba(255,255,255,0.5),
@@ -41,24 +43,25 @@
 		border-bg:					rgba(255,255,255,0.075),
 		border-bg-alt:				rgba(255,255,255,0.175),
 
-		theme-color:				#10069F, /* rgb: 10, 6, 159 */
-		theme-color-darker:			darken(#10069F, 20%),
-		theme-color-overlay:		rgba(10, 6, 159, 0.75),
-
 		theme-neutral:				#aaaaaa,
+		theme-color-transparent:	rgba(lighten($base-color, 20%), 0.75),
 
+		theme-light-color:			$base-color,
+		theme-light-color-lighter:	lighten($base-color, 20%),
 		theme-light-fg:				#1b1f22,
 		theme-light-bg:				#ffffff,
 		theme-light-overlay:		rgba(255,255,255,0.9),
 		theme-light-shadow:			rgba(0,0,0,0.1),
 
+		theme-dark-color:			lighten($base-color, 50%),
+		theme-dark-color-lighter:	lighten($base-color, 20%),
 		theme-dark-fg:				#ffffff,
 		theme-dark-bg:				#1b1f22,
-		theme-dark-overlay:			rgba(0,0,0,0.8),
+		theme-dark-overlay:			rgba(0,0,0,0.9),
+		theme-dark-shadow:			rgba(255,255,255,0.1),
 
+		trace-color:				#f2c24f,
+		pass-color:					#28ac70,
 		error-color:				#ff0000,
-		error-color-darker:			darken(#ff0000, 20%),
-
-		switch-on-bg:				lighten(#10069F, 50%),
-		switch-off-bg:				#aaaaaa
+		error-color-darker:			darken(#ff0000, 20%)
 	);

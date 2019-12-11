@@ -91,8 +91,8 @@ const Slider = ({ name, value, min, max, step, unit, setValue }) => {
 	return (
 		<div className={'slider' + (active ? ' active' : '')} id='slider-1'>
 			<div className='slider__label'>
-				<div className='slider__label-title'>{name}</div>
-				<div className='slider__label-value'><span className='v'>{value}</span>{' '}<span className='slider__label-unit'>{unit}</span></div>
+				<div className='title'>{name}</div>
+				<div className='value'><span className='v'>{value}</span>{' '}<span className='unit'>{unit}</span></div>
 			</div>
 			<div ref={el} className='slider__wrapper'
 				onMouseDown={handleStart}

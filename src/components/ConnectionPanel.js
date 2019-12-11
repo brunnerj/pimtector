@@ -16,7 +16,8 @@ const ConnectionPanel = ({ panel, panelTimeout, connect, isConnecting }) => {
 				<div className='lead-in'>Introducing PIM<span>tector</span>&trade;</div>
 
 				<div className='main-tag'>
-					<span>Find</span> and <span>Fix</span> PIM <span>Now</span></div>
+					<span className='b'>Find</span> and <span className='b'>Fix</span> <span className='r'>PIM</span> <span className='b'>Now</span>
+				</div>
 
 				<div className='sub-tag'>
 					Connect your Bluetooth LE receiver to get started.

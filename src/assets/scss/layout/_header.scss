@@ -1,28 +1,32 @@
 
 header {
-
 	@include vendor('display', 'flex');
 	@include vendor('flex-direction', 'row');
 	@include vendor('justify-content', 'space-between');
 
 	width: 100%;
 	z-index: 4;
-	background-color: _palette(theme-color);
-	color: _palette(theme-dark-fg); /* fg color for header is opposite of normal theme */
+	color: _palette(theme-dark-fg); // fg color for header is opposite of normal theme
+	background-color: _palette(theme-light-color);
 	box-shadow: 0 0 3px 0 _palette(theme-light-fg);
 
 	nav {
-		display: flex;
-		flex-direction: row;
+		@include vendor('display', 'flex');
+		@include vendor('flex-direction', 'row');
+	}
 
-		button {
-			@include vendor('box-shadow', none);
-			border-radius: 0;
-			font-size: 2.2rem;
+	button {
+		color: _palette(theme-light-bg);
+		box-shadow: none;
+		border-radius: 0;
+		font-size: 2.2rem;
 
-			&.icon:before {
-				margin-right: 0;
-			}
+		&.icon:before {
+			margin-right: 0;
+		}
+
+		&:hover, &:active {
+			background-color: _palette(theme-light-color-lighter);
 		}
 	}
 
@@ -31,19 +35,6 @@ header {
 		font-weight: 600;
 		span {
 			font-size: 80%;
-		}
-	}
-
-	/* header fg theme colors are reversed from normal */
-	&.theme-dark {
-		background-color: _palette(switch-on-bg);
-		box-shadow: 0 0 3px 0 _palette(theme-dark-fg);
-		.branding {
-			color: _palette(theme-light-fg);
-		}
-
-		nav button {
-			color: _palette(theme-light-fg);
 		}
 	}
 
@@ -66,6 +57,21 @@ header {
 				padding-top: 0;
 				padding-bottom: 0;
 				opacity: 0;
+			}
+		}
+	}
+
+	// header theme colors are reversed from main/normal perspective
+	&.theme-dark {
+		color: _palette(theme-light-fg);
+		background-color: _palette(theme-dark-color);
+		box-shadow: 0 0 3px 0 _palette(theme-dark-fg);
+
+		button {
+			color: _palette(theme-light-fg);
+
+			&:hover, &:active {
+				background-color: _palette(theme-dark-color-lighter);
 			}
 		}
 	}
@@ -152,4 +158,5 @@ header {
 			}
 		}
 	}
+
 }

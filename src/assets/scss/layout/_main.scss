@@ -83,8 +83,51 @@
 		}
 	}
 
+	button {
+		color: _palette(theme-light-bg);
+		background-color: _palette(theme-light-color);
+		box-shadow: none;
+
+		&:hover, &:active {
+			background-color: _palette(theme-light-color-lighter);
+		}
+	}
+
 	#connection {
 		@include vendor('justify-content', 'space-between');
+
+		.spinner {
+			display: none;
+			flex-direction: column;
+			justify-content: center;
+			text-align: center;
+			position: absolute;
+			top: 0;
+			left: 0;
+			right: 0;
+			bottom: 0;
+			font-size: 2em;
+			color: _palette(theme-dark-bg);
+			background-color: _palette(theme-light-overlay);
+			&.active {
+				display: flex;
+			}
+	
+			&:before {
+				content: '';
+				border: 5px solid _palette(theme-color-transparent);
+				border-radius: 50px;
+				position: relative;
+				left: 50%;
+				margin-left: -15px;
+				width: 50px;
+				height: 50px;
+				opacity: 0;
+				
+				animation: pulsate 1s ease-out;
+				animation-iteration-count: infinite;
+			}
+		}	
 
 		.cta {
 			text-align: center;
@@ -106,8 +149,11 @@
 			font-size: 4rem;
 			line-height: 4rem;
 			span {
-				color: _palette(theme-color);
+				color: _palette(theme-light-color);
 				font-weight: 600;
+			}
+			.r {
+				color: _palette(error-color-darker);
 			}
 		}
 
@@ -116,19 +162,6 @@
 			margin-bottom: 3.5rem;
 			font-size: 1.5rem;
 			color: _palette(theme-neutral);
-		}
-
-		button {
-			background-color: _palette(theme-color);
-			box-shadow: none;
-
-			&:hover {
-				background-color: _palette(theme-color-darker);
-			}
-	
-			&:active {
-				background-color: _palette(theme-color-darker);
-			}
 		}
 
 		.bg {
@@ -144,66 +177,79 @@
 				height: 100%;
 			}
 		}
-
 	}
 
 	#gauges {
 		@include vendor('flex-direction', 'row');
 		@include vendor('align-items', 'flex-start');
 
-		.slider {
+		.flot-svg text {
+			fill: _palette(theme-light-fg);
+		}
+
+		#slider-1 {
 			width: 10%;
-			background: #e6e6e6;
+			background: _palette(theme-neutral);
+
+			.slider__label {
+				font-size: 120%;
+				color: _palette(theme-light-fg);
+				background-color: _palette(theme-light-bg);
+
+				&::after {
+					background-color: _palette(theme-light-bg);
+				}
+
+				.value {
+					font-size: 120%;
+					font-weight: bold;
+				}
+			}
 		}
 
 		#gauges-charts {
+			@include vendor('display', 'flex');
 			@include vendor('flex-direction', 'column');
+
 			width: 90%;
 			height: 100%;
 
 			#spectrum-1 {
 				position: relative;
-				height: 75%;
+				height: 65%;
+			}
+
+			#receiver-1 {
+				height: 15%;
+				padding: 8px 75px 8px 35px;
+				background-color: _palette(theme-neutral);
 			}
 
 			#history-1 {
 				position: relative;
-				height: 25%;
+				height: 20%;
 			}
 		}
 	}
 
 	#tips {
-		display: flex;
-		flex-direction: column;
-		justify-content: center;
-		align-items: center;
-		background-color: _palette(theme-light-overlay);
+		@include vendor('display', 'flex');
+		@include vendor('flex-direction', 'column');
+		@include vendor('justify-content', 'center');
+		@include vendor('align-items', 'center');
 		position: absolute;
 		z-index: 5;
 		left: 0;
 		top: 0;
 		bottom: 0;
 		right: 0;
-	
-		button {
-			background-color: _palette(theme-color);
-			box-shadow: none;
-	
-			&:hover {
-				background-color: _palette(theme-color-darker);
-			}
-	
-			&:active {
-				background-color: _palette(theme-color-darker);
-			}
-		}
+		background-color: _palette(theme-light-overlay);
 	
 		.tip {
 			position: absolute;
 			width: 12rem;
 			color: _palette(theme-dark-fg);
-			background-color: _palette(theme-color);
+			background-color: _palette(theme-light-color);
 	
 			padding: 0.4rem 0.8rem;
 			border-radius: _size(border-radius);
@@ -218,7 +264,7 @@
 				top: -0.5rem;
 				z-index: -1;
 				transform: rotate(45deg);
-				background-color: _palette(theme-color);
+				background-color: _palette(theme-light-color);
 				box-shadow: 0 3px 6px _palette(theme-light-shadow);
 	
 			}
@@ -266,17 +312,17 @@
 		padding: 2.5rem 0.5rem;
 
 		.divider {
-			background-color: _palette(theme-color);
+			background-color: _palette(theme-neutral);
 			width: 80%;
 			height: 2px;
 			margin: 1rem 0;
 		}
 
 		.item {
+			@include vendor('display', 'flex');
+			@include vendor('flex-direction', 'row');
+			@include vendor('align-items', 'flex-start');
 			width: 16rem;
-			display: flex;
-			flex-direction: row;
-			align-items: flex-start;
 			margin-bottom: 1rem;
 
 			label {
@@ -284,22 +330,6 @@
 				font-size: 1.4rem;
 				line-height: 1.75rem; // match the toggle switch height
 				text-transform: none;
-			}
-
-			button {
-				background-color: _palette(theme-color);
-				box-shadow: none;
-				width: 80%;
-				margin: 0 auto;
-	
-				&:hover {
-					background-color: _palette(theme-color-darker);
-				}
-		
-				&:active {
-					background-color: _palette(theme-color-darker);
-				}
-	
 			}
 		}
 		
@@ -315,7 +345,6 @@
 
 		button {
 			background-color: _palette(error-color);
-			box-shadow: none;
 
 			&:hover {
 				background-color: _palette(error-color-darker);
@@ -327,148 +356,77 @@
 		}
 
 	}
-
-	.gauge {
-		position: relative;
-		margin-top: 1rem;
-		width: 100%;
-		max-width: 400px;
-		text-align: center;
-
-		&:after {
-			content: '';
-			display: block;
-			padding-bottom: 100%;
-		}
-	}
-
-	.readout {
-		position: absolute;
-		display: flex;
-		flex-direction: column;
-		justify-content: center;
-		left: 0;
-		right: 0;
-		top: 0;
-		bottom: 0;
-		
-		.needle {
-			position: absolute;
-			background-color: _palette(theme-color);
-			border-radius: 100%;
-			width: 30%;
-			height: 30%;
-			left: 35%;
-			z-index: 1;
-			transform: rotate(45deg);
-
-			@include vendor('transition', (
-				'transform #{_duration(transition)} ease-in-out'
-			));
-
-			&:after {
-				content: '';
-				position: absolute;
-				bottom: 0;
-				left: 50%;
-				width: 0;
-				height: 0;
-				border: 1em solid transparent;
-				border-top-color: _palette(theme-color);
-				border-bottom: 0;
-				margin-left: -1em;
-				margin-bottom: -0.8em;
-			}	
-		}
-
-		.value, .unit {
-			color: _palette(theme-dark-fg);
-			z-index: 2;
-		}
-
-		.value {
-			font-size: 2.6rem;
-			line-height: 2.6rem;
-			padding-top: 1.2rem;
-		}
-	}
-
-	.gauge-scale {
-		position: absolute;
-		width: 60%;
-		margin: 0 20%;
-		bottom: 15%;
-		display: flex;
-		flex-direction: row;
-		justify-content: space-between;
-	}
-
-	.spinner {
-		display: none;
-		flex-direction: column;
-		justify-content: center;
-		text-align: center;
-		position: absolute;
-		top: 0;
-		left: 0;
-		right: 0;
-		bottom: 0;
-		font-size: 2em;
-		color: _palette(theme-dark-bg);
-		background-color: _palette(theme-light-overlay);
-		&.active {
-			display: flex;
-		}
-
-		&:before {
-			content: '';
-			border: 5px solid _palette(theme-color-overlay);
-			border-radius: 50px;
-			position: relative;
-			left: 50%;
-			margin-left: -15px;
-			width: 50px;
-			height: 50px;
-			opacity: 0;
-			
-			animation: pulsate 1s ease-out;
-			animation-iteration-count: infinite;
-		}
-	}
-
+	
 	&.theme-dark {
 
 		color: _palette(theme-dark-fg);
 		background-color: _palette(theme-dark-bg);
 
-		.spinner {
-			color: _palette(theme-dark-fg);
-			background-color: _palette(theme-dark-overlay);
+		button {
+			color: _palette(theme-dark-bg); 
+			background-color: _palette(theme-dark-color);
+
+			&:hover, &:active {
+				background-color: _palette(theme-dark-color-lighter);
+			}
 		}
 
-		.readout .value,
-		.readout .unit {
-			color: _palette(theme-light-fg);
-		}
+		#connection {
 
-		.flot-svg text {
-			fill: #fff;
-		}
+			.spinner {
+				color: _palette(theme-dark-fg);
+				background-color: _palette(theme-dark-overlay);
+			}
 
-		#gauges .slider {
-			background-color: #787878;
-
-			.slider__label {
-				color: #fff;
-				background-color: #000;
-
-				&::after {
-					background-color: #000;
+			.main-tag {
+				span {
+					color: _palette(theme-dark-color);
+				}
+				.r {
+					color: _palette(error-color-darker);
 				}
 			}
 		}
-	}
 
+		#gauges {
+
+			.flot-svg text {
+				fill: _palette(theme-dark-fg);
+			}
+
+			#slider-1 {
+				
+				.slider__label {
+					color: _palette(theme-dark-fg);
+					background-color: _palette(theme-dark-bg);
+
+					&::after {
+						background-color: _palette(theme-dark-bg);
+					}
+				}
+			}
+		}
+
+		#tips {
+			background-color: _palette(theme-dark-overlay);
+			box-shadow: 0 3px 6px _palette(theme-dark-shadow);
+
+			.tip {
+				color: _palette(theme-dark-bg); 
+				background-color: _palette(theme-dark-color);
+
+				.tip--tip {
+					background-color: _palette(theme-dark-color);
+					box-shadow: 0 3px 6px _palette(theme-dark-shadow);
+				}
+			}
+		}
+
+		.toggle-switch.on::after,
+		.toggle-switch.off::after {
+			background: _palette(theme-dark-bg);
+		}
+	}
 
 
 	@keyframes pulsate {

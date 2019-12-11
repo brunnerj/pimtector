@@ -5,9 +5,6 @@ $thumb-spacing: 	0.125rem;
 $thumb-size: 		$switch-height - (2 * $thumb-spacing);
 $thumb-slide-size: 	$switch-height * ($aspect-ratio - 1) + $thumb-spacing;
 
-$switch-on-bg:		_palette(switch-on-bg);
-$switch-off-bg:		_palette(switch-off-bg);
-
 .toggle-switch {
 	display: inline-block;
 	height: $switch-height;
@@ -52,7 +49,7 @@ $switch-off-bg:		_palette(switch-off-bg);
 
 	&.on {
 		&::before {
-			background: $switch-on-bg !important;
+			background: _palette(theme-dark-color) !important;
 		}
 		&::after {
 			@include vendor('transform', 'translateX(#{$thumb-slide-size})');
@@ -61,18 +58,11 @@ $switch-off-bg:		_palette(switch-off-bg);
 
 	&.off {
 		&::before {
-			background: $switch-off-bg !important;
+			background: _palette(theme-neutral) !important;
 		}
 		&::after {
 			@include vendor('transform', 'translateX(#{$thumb-spacing})');
 		}
 	}
 
-}
-
-.main.theme-dark {
-	.toggle-switch.on::after,
-	.toggle-switch.off::after {
-		background: _palette(theme-dark-bg);
-	}
 }

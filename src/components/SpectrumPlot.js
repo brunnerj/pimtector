@@ -53,12 +53,12 @@ const SpectrumPlot = ({ traces, settings }) => {
 			max: settings.max_power_dBm
 		},
 		xaxis: {
-			show: false,
 			axisLabel: 'Frequency [MHz]',
 			autoScale: 'none',
 			min: fstart,
 			max: fstop,
-			tickDecimals: 3
+			tickDecimals: 3,
+			ticks: 5
 		}
 	}
 

@@ -28,7 +28,7 @@ const Footer = ({ show, theme }) => {
 					{siteInfo.site.siteMetadata.owner}
 				</a>
 			
-				<Logo className='logo' color='#10069F' />
+				<Logo className='logo' />
 			</p>
 		</footer>
 	);
