@@ -14,6 +14,10 @@
 	color: _palette(theme-light-fg);
 	background-color: _palette(theme-light-bg);
 
+	* {
+		@include vendor('user-select', 'none');
+	}
+
 	.panel {
 		@include vendor('display', 'flex');
 		@include vendor('flex-direction', 'column');
@@ -213,22 +217,38 @@
 
 			width: 90%;
 			height: 100%;
+		}
 
-			#spectrum-1 {
+		#spectrum-1 {
+			position: relative;
+			height: 65%;
+		}
+
+		#receiver-1 {
+			height: 15%;
+			padding: 8px 75px 8px 35px;
+			color: _palette(theme-light-color);
+			background-color: _palette(theme-neutral);
+
+			.ind {
 				position: relative;
-				height: 65%;
+				padding: 0 4px 0 2.4em;
+				border: 1px solid _palette(theme-light-color);
+				border-radius: 4px;
+				.label {
+					position: absolute;
+					left: 0;
+					padding: 0 3px;
+					color: _palette(theme-dark-fg);
+					background-color: _palette(theme-light-color);
+					border-radius: 0 0 4px 0;
+				}
 			}
+		}
 
-			#receiver-1 {
-				height: 15%;
-				padding: 8px 75px 8px 35px;
-				background-color: _palette(theme-neutral);
-			}
-
-			#history-1 {
-				position: relative;
-				height: 20%;
-			}
+		#history-1 {
+			position: relative;
+			height: 20%;
 		}
 	}
 
