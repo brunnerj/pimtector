@@ -60,7 +60,7 @@ const ToneGenerator = ({ isPlaying, peak_dBm, settings }) => {
 
 		// ramp down volume if we've got a context
 		if (_ctx) {
-			_g.gain.exponentialRampToValueAtTime(0.1, _ctx.currentTime + BEEP_TIME_s);
+			_g.gain.exponentialRampToValueAtTime(0.001, _ctx.currentTime + BEEP_TIME_s);
 
 			// close AudioContext if we're not playing or if sound is turned off
 			if (!isPlaying || !settings.sound) {
