@@ -68,7 +68,7 @@ const initialState = {
 		spectrum_traces: 16,
 		spectrum_trace_color: { R: 242, G: 194, B: 79 }, // trace-color: 242, 194, 79
 
-		pass_color: '#28ac70', // pass-color in _vars.scss
+		pass_color: '#00bb00', // pass-color in _vars.scss
 		fail_color: '#ff0000', // error-color in _vars.scss
 		threshold_line_dark: '#1b1f22', // theme-light-fg
 		threshold_line_light: '#e4e0dd' // theme-dark-fg
@@ -150,6 +150,7 @@ const reducer = (state = initialState, action = {}) => {
 				traces: action.data
 			};
 		case CLEAR:
+			Receiver.clear();
 			return {
 				...state,
 				traces: []
