@@ -156,10 +156,8 @@ const connect = async ({ batteryFn, receiverFn }) => {
 	});
 	console.log('[Receiver.js] > Connected:             ' + device.name);
 
-	device.addEventListener(GATT_SERVER_DISCONNECTED, async () => {
-		await disconnect();
-
-		throw new Error(`[Receiver.js] ${DEVICE_NAME} has disconnected.`);
+	device.addEventListener(GATT_SERVER_DISCONNECTED, () => {
+		console.log(`[Receiver.js] ${DEVICE_NAME} has disconnected.`);
 	});
 
 	console.log('[Receiver.js] Connecting to device GATT server...');
@@ -256,6 +254,9 @@ const disconnect = async () => {
 		}
 	}
 
+	if (device && device.gatt.connected) {
+		device.gatt.disconnect();
+	}
 	device = null;
 
 	batteryLevelCharacteristic = null;
@@ -293,11 +294,17 @@ const pause = async () => {
 	await receiverDataCharacteristic.stopNotifications();
 }
 
+const clear = () => {
+	buffer = [];
+	traces = [];
+}
+
 const Receiver = {
 	connect,
 	disconnect,
 	play,
 	pause,
+	clear,
 	overflow
 }
 
