@@ -17,7 +17,7 @@
     "flot": "^4.1.1",
     "gatsby": "^2.17.11",
     "gatsby-plugin-canonical-urls": "^2.1.14",
-    "gatsby-plugin-manifest": "^2.2.27",
+    "gatsby-plugin-manifest": "^2.2.37",
     "gatsby-plugin-react-helmet-async": "^1.0.9",
     "gatsby-plugin-s3": "^0.2.5",
     "gatsby-plugin-sass": "^2.1.21",
