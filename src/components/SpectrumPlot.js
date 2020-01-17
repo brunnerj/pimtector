@@ -2,9 +2,6 @@ import React, { useRef, useLayoutEffect } from 'react';
 import PropTypes from 'prop-types';
 
 import $ from 'jquery';
-window.jQuery = $;
-window.$ = $;
-require('flot');
 
 const SpectrumPlot = ({ traces, settings }) => {
 	
@@ -63,6 +60,12 @@ const SpectrumPlot = ({ traces, settings }) => {
 	}
 
 	useLayoutEffect(() => {
+
+		if (typeof window !== 'undefined' && !window.$.plot) {
+			window.jQuery = $;
+			window.$ = $;
+			require('flot');
+		}
 		
 		// update the plot, save the plot object
 		plotObj.current = $.plot($(plotRef.current), traces, options);

@@ -1,14 +1,11 @@
-import React, { useRef, useEffect } from 'react';
+import React, { useRef, useLayoutEffect } from 'react';
 import PropTypes from 'prop-types';
 
 import $ from 'jquery';
-window.jQuery = $;
-window.$ = $;
-require('flot');
 
 function usePrevious(value) {
 	const ref = useRef();
-	useEffect(() => {
+	useLayoutEffect(() => {
 		ref.current = value;
 	});
 	return ref.current;
@@ -94,7 +91,14 @@ const HistoryPlot = ({ reset, peak_dBm, settings }) => {
 		}
 	}
 
-	useEffect(() => {
+	useLayoutEffect(() => {
+
+		if (typeof window !== 'undefined' && !window.$.plot) {
+			window.jQuery = $;
+			window.$ = $;
+			require('flot');
+		}
+
 		// save the history buffer
 		histRef.current = buffer;
 
