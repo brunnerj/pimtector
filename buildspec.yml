@@ -4,9 +4,6 @@ phases:
     runtime-versions:
       nodejs: 12
     commands:
-      - npm install -g gatsby-cli
-  pre_build:
-    commands:
       - npm ci
   build:
     commands:
