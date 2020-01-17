@@ -61,10 +61,10 @@ const SpectrumPlot = ({ traces, settings }) => {
 
 	useLayoutEffect(() => {
 
-		if (typeof window !== 'undefined' && !window.$.plot) {
+		if (typeof window !== 'undefined' && !window.$) {
 			window.jQuery = $;
 			window.$ = $;
-			require('flot');
+			require('flot'); // adds window.$.plot
 		}
 		
 		// update the plot, save the plot object

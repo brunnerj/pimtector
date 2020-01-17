@@ -93,10 +93,10 @@ const HistoryPlot = ({ reset, peak_dBm, settings }) => {
 
 	useLayoutEffect(() => {
 
-		if (typeof window !== 'undefined' && !window.$.plot) {
+		if (typeof window !== 'undefined' && !window.$) {
 			window.jQuery = $;
 			window.$ = $;
-			require('flot');
+			require('flot'); // adds window.$.plot
 		}
 
 		// save the history buffer
