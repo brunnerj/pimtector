@@ -2,21 +2,17 @@ version: 0.2
 phases:
   install:
     runtime-versions:
-      nodejs: 10
+      nodejs: 12
     commands:
-      - echo install step
       - npm install -g gatsby-cli
   pre_build:
     commands:
-      - echo pre_build step
       - npm ci
   build:
     commands:
-      - echo build step
       - npm run build
   post_build:
     commands:
-      - echo post_build step
       - echo deploying to $TARGET_BUCKET_NAME
       - echo note target address is $TARGET_ADDRESS
       - npm run deploy
