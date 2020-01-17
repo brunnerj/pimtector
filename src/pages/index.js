@@ -260,7 +260,7 @@ const IndexPage = () => {
 					canPlay={state.isConnected && !state.errors}
 
 					clear={() => dispatch(clear())}
-					canClear={state.traces.length > 0}
+					canClear={state.isConnected && state.traces.length > 0}
 
 					configure={configureFn}
 					canConfigure={!state.errors && !state.isConnecting}
