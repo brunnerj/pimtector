@@ -3,9 +3,9 @@ import PropTypes from 'prop-types';
 
 import Panel, { PANELS } from './Panel';
 import Spinner from './Spinner';
-import Showcase from '../images/showcase-01.png';
-import LeftWand from '../images/wand-left.png';
-import RightWand from '../images/wand-right.png';
+//import Showcase from '../images/showcase-01.png';
+//import LeftWand from '../images/wand-left.png';
+//import RightWand from '../images/wand-right.png';
 
 import BgVideo from "../assets/Abstract - 26011.mp4";
 
