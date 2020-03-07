@@ -4,7 +4,7 @@ import PropTypes from 'prop-types';
 const ReceiverControl = ({ Fstart_MHz, Fstop_MHz, RBW_kHz, settings }) => {
 
 	const span_kHz = 1000 * (Fstop_MHz - Fstart_MHz);
-	const Fo_MHz = Fstart_MHz + (span_kHz / 2 * 1000);
+	const Fo_MHz = Fstart_MHz + (span_kHz / (2 * 1000));
 
 	return (
 		<div className='receiver' id='receiver-1'>
