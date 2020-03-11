@@ -101,6 +101,7 @@ const Slider = ({ name, value, min, max, step, unit, setValue }) => {
 				onTouchMove={handleDrag}
 				onTouchEnd={handleEnd}
 				aria-valuemin={min} aria-valuemax={max} aria-valuenow={value}>
+					<h3>&laquo;SLIDE&raquo;</h3>
 				<div className='slider__fill' style={fillStyle} />
 			</div>
 		</div>

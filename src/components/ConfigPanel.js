@@ -43,7 +43,8 @@ const ConfigPanel = ({ panel, panelTimeout, settings, configure, isConnected, di
 			</div>
 		
 			<div className='divider' />
-
+			
+			{/*
 			<div className='item'>
 				<button className='icon fa-bomb'
 					onClick={() => { throwError(Error('This is a forced error!')) } }
@@ -51,6 +52,7 @@ const ConfigPanel = ({ panel, panelTimeout, settings, configure, isConnected, di
 					Force Error
 				</button>
 			</div>
+			*/}
 
 		</Panel>
 	);

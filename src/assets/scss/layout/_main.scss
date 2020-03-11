@@ -235,7 +235,6 @@
 		}
 
 		#receiver-1 {
-			height: 15%;
 			padding: 8px 75px 8px 35px;
 			color: _palette(theme-light-color);
 			background-color: _palette(theme-neutral);
@@ -279,7 +278,7 @@
 			position: absolute;
 			width: 12rem;
 			color: _palette(theme-dark-fg);
-			background-color: _palette(theme-light-color);
+			background-color: lighten(_palette(theme-light-color), 20%);
 	
 			padding: 0.4rem 0.8rem;
 			border-radius: _size(border-radius);
@@ -294,7 +293,7 @@
 				top: -0.5rem;
 				z-index: -1;
 				transform: rotate(45deg);
-				background-color: _palette(theme-light-color);
+				background-color: lighten(_palette(theme-light-color), 20%);
 				box-shadow: 0 3px 6px _palette(theme-light-shadow);
 	
 			}
@@ -308,9 +307,9 @@
 			}
 		}
 	
-		#clear {
+		#right-buttons {
 			top: 1rem;
-			right: 4rem;
+			right: 6rem;
 	
 			.tip--tip {
 				left: 80%;
@@ -318,8 +317,8 @@
 		}
 	
 		#threshold {
-			top: 62.5%;
-			left: 55%;
+			top: 50%;
+			left: 6rem;
 	
 			.tip--tip {
 				left: -0.5rem;
@@ -329,9 +328,24 @@
 	
 		#history {
 			top: 80%;
-			width: 16rem;
 			left: calc(50% - 8rem);
 	
+			.tip--tip {
+				display: none;
+			}
+		}
+
+		#tuning {
+			top: 67.5%;
+			left: 30%;
+			.tip--tip {
+				left: calc(100% - 0.5rem);
+				top: calc(50% - 0.5rem);
+			}
+		}
+
+		#spectrum {
+			top: 20%;
 			.tip--tip {
 				display: none;
 			}

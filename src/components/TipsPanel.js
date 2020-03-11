@@ -20,9 +20,10 @@ const Tips = ({ panel, panelTimeout, settings, configure }) => {
 				Use this button to play or pause the receiver data stream.
 			</div>
 
-			<div className='tip' id='clear'>
+			<div className='tip' id='right-buttons'>
 				<div className='tip--tip'></div>
-				This button clears the current stream of receiver data.
+				These buttons clear the stream of receiver data, show
+				the battery level and open a panel for more settings.
 			</div>
 
 			<div className='tip' id='threshold'>
@@ -34,6 +35,18 @@ const Tips = ({ panel, panelTimeout, settings, configure }) => {
 				<div className='tip--tip'></div>
 				The receiver data stream over time is shown in this area.
 			</div>
+
+			<div className='tip' id='tuning'>
+				<div className='tip--tip'></div>
+				Use this button to tune the receiver to a different band.
+			</div>
+
+			<div className='tip' id='spectrum'>
+				<div className='tip--tip'></div>
+				The spectrum (amplitude versus frequency) is plotted on
+				a graph with older traces fading out.
+			</div>
+
 		</Panel>
 	);
 }

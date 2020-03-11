@@ -30,6 +30,24 @@ header {
 		}
 	}
 
+	#battery-1 {
+		position: relative;
+		span {
+			position: absolute;
+			left: -2px;
+			right: 0;
+			text-align: center;
+			font-size: 28%;
+			font-weight: bold;
+			letter-spacing: 0.1em;
+			color: _palette(theme-dark-bg);
+		}
+		cursor: default;
+		&:hover, &:active {
+			background-color: transparent;
+		}
+	}
+
 	.branding {
 		font-size: 2.2rem;
 		font-weight: 600;
@@ -73,6 +91,10 @@ header {
 			&:hover, &:active {
 				background-color: _palette(theme-dark-color-lighter);
 			}
+		}
+
+		#battery-1 span {
+			color: _palette(theme-dark-fg);
 		}
 	}
 

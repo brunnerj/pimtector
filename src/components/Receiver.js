@@ -204,7 +204,7 @@ const connect = async ({ batteryFn, receiverFn }) => {
 	// If the receiver doesn't return valid info, it should return an
 	// error string flagged with 'ERROR' at the beginning. If so, we
 	// just throw here and disconnect.
-	if (msg.startsWith('ERROR')) {
+	if (msg.toUpperCase().startsWith('ERROR')) {
 		throw new Error(msg);
 	}
 

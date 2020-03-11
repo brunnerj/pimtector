@@ -34,7 +34,7 @@ const Header = ({
 	} else if (battery_level >= 20) {
 		battery_class = 'quarter';
 	} else {
-		battery_title = 'Battery';
+		battery_title = '';
 	}
 
 	return (
@@ -56,10 +56,10 @@ const Header = ({
 					disabled={!canClear}>
 				</button>
 				<button 
+					id='battery-1'
 					className={'icon fa-battery-' + battery_class}
-					onClick={() => { }}
-					title={battery_title}
 					disabled={!isConnected}>
+						<span>{battery_title}</span>
 				</button>
 				<button 
 					className='icon fa-cog'

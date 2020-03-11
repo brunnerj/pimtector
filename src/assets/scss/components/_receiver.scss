@@ -8,6 +8,16 @@
 		@include vendor('display', 'flex');
 		@include vendor('flex-direction', 'row');
 		@include vendor('justify-content', 'space-between');
+		@include vendor('align-items', 'flex-start');
+	}
+
+	.row:last-child {
+		margin-top: 5px;
+	}
+
+	.ind {
+		text-align: right;
+		width: 170px;
 	}
 
 	.label {
